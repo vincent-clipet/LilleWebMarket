@@ -1,6 +1,7 @@
+package beans;
 
 
-public class Sell
+public class Stock
 {
 
 	//
@@ -15,7 +16,7 @@ public class Sell
 	// --- Constructors ----------------------------
 	//
 	
-	public Sell()
+	public Stock()
 	{
 		
 	}
