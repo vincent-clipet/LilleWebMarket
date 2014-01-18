@@ -8,7 +8,7 @@ CREATE TABLE users
 	
 	login TEXT UNIQUE NOT NULL,
 	password TEXT NOT NULL,
-	role INTEGER NOT NULL,
+	role TEXT NOT NULL,
 	money INTEGER NOT NULL
 );
 
@@ -62,6 +62,9 @@ CREATE TABLE sells
 (
 	id_sells SERIAL,
 	CONSTRAINT pk_sells PRIMARY KEY (id_sells),
+	
+	date_sells DATE NOT NULL,
+	price_sells INTEGER NOT NULL,
 	
 	id_stock INTEGER NOT NULL,
 	CONSTRAINT fk_sells_id_stock FOREIGN KEY (id_stock) REFERENCES stock(id_stock)
