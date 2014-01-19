@@ -1,6 +1,7 @@
+package beans;
 
 
-public class Market
+public class Log
 {
 
 	//
@@ -15,7 +16,7 @@ public class Market
 	// --- Constructors ----------------------------
 	//
 	
-	public Market()
+	public Log()
 	{
 		
 	}

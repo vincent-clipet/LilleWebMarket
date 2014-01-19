@@ -1,71 +1,92 @@
-DROP TABLE IF EXISTS users, market, logs, stock, sells;
+DROP TABLE IF EXISTS users, users_roles, markets, logs, stocks, sells;
 
 -- USERS
 CREATE TABLE users
 (
-	id_user SERIAL,
-	CONSTRAINT pk_user PRIMARY KEY (id_user),
+	user_id SERIAL,
+	CONSTRAINT pk_user PRIMARY KEY (user_id),
 	
 	login TEXT UNIQUE NOT NULL,
 	password TEXT NOT NULL,
-	role TEXT NOT NULL,
-	money INTEGER NOT NULL
+	money INTEGER NOT NULL DEFAULT 10000
+);
+
+-- ROLES
+CREATE TABLE users_roles
+(
+	login TEXT NOT NULL,
+	role TEXT NOT NULL DEFAULT 'user',
+	CONSTRAINT pk_users_role PRIMARY KEY (login, role)
 );
 
 -- MARKET
-CREATE TABLE market
+CREATE TABLE markets
 (
-	id_market SERIAL,
-	CONSTRAINT pk_market PRIMARY KEY (id_market),
+	market_id SERIAL,
+	CONSTRAINT pk_market PRIMARY KEY (market_id),
 	
 	info TEXT NOT NULL,
 	oppposite_info TEXT NOT NULL,
-	date_end DATE NOT NULL,
+	end_date DATE NOT NULL,
 	result BOOL DEFAULT NULL,
 	
-	id_creator INTEGER NOT NULL,
-	CONSTRAINT fk_market_id_creator FOREIGN KEY (id_creator) REFERENCES users(id_user)
+	creator_id INTEGER NOT NULL,
+	CONSTRAINT fk_market_creator_id FOREIGN KEY (creator_id) REFERENCES users(user_id)
 );
 
 -- STOCK
-CREATE TABLE stock
+CREATE TABLE stocks
 (
-	id_stock SERIAL,
-	CONSTRAINT pk_stock PRIMARY KEY (id_stock),
+	stock_id SERIAL,
+	CONSTRAINT pk_stock PRIMARY KEY (stock_id),
 	
 	quantity INTEGER NOT NULL,
 	opposite BOOL DEFAULT 'false',
 	
-	id_owner INTEGER NOT NULL,
-	CONSTRAINT fk_stock_id_owner FOREIGN KEY (id_owner) REFERENCES users(id_user),
+	owner_id INTEGER NOT NULL,
+	CONSTRAINT fk_stock_owner_id FOREIGN KEY (owner_id) REFERENCES users(user_id),
 	
-	id_market INTEGER NOT NULL,
-	CONSTRAINT fk_stock_id_market FOREIGN KEY (id_market) REFERENCES market(id_market)
+	market_id INTEGER NOT NULL,
+	CONSTRAINT fk_stock_market_id FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
 
 -- LOGS
 CREATE TABLE logs
 (
-	id_log SERIAL,
-	CONSTRAINT pk_log PRIMARY KEY (id_log),
+	log_id SERIAL,
+	CONSTRAINT pk_log PRIMARY KEY (log_id),
 	
-	date_sell DATE NOT NULL,
+	sell_date DATE NOT NULL,
 	log_price INTEGER NOT NULL,
 	log_quantity INTEGER NOT NULL,
 	
-	id_market INTEGER NOT NULL,
-	CONSTRAINT fk_logs_id_market FOREIGN KEY (id_market) REFERENCES market(id_market)
+	market_id INTEGER NOT NULL,
+	CONSTRAINT fk_logs_market_id FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
 
 -- SELL
 CREATE TABLE sells
 (
-	id_sells SERIAL,
-	CONSTRAINT pk_sells PRIMARY KEY (id_sells),
+	sells_id SERIAL,
+	CONSTRAINT pk_sells PRIMARY KEY (sells_id),
 	
-	date_sells DATE NOT NULL,
+	sell_dates DATE NOT NULL,
 	price_sells INTEGER NOT NULL,
 	
-	id_stock INTEGER NOT NULL,
-	CONSTRAINT fk_sells_id_stock FOREIGN KEY (id_stock) REFERENCES stock(id_stock)
+	stock_id INTEGER NOT NULL,
+	CONSTRAINT fk_sells_stock_id FOREIGN KEY (stock_id) REFERENCES stocks(stock_id)
 );
+
+----------------------------------------------------------------------
+
+-- USERS
+INSERT INTO users(login, password) VALUES('user1', 'user1');
+INSERT INTO users(login, password) VALUES('user2', 'user2');
+INSERT INTO users(login, password) VALUES('admin1', 'admin1');
+
+-- ROLES
+INSERT INTO users_roles(login) VALUES('user1');
+INSERT INTO users_roles(login) VALUES('user2');
+INSERT INTO users_roles(login, role) VALUES('admin1', 'marketmaker');
+
+

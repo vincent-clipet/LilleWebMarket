@@ -1,6 +1,7 @@
+package beans;
 
 
-public class Log
+public class Sell
 {
 
 	//
@@ -15,7 +16,7 @@ public class Log
 	// --- Constructors ----------------------------
 	//
 	
-	public Log()
+	public Sell()
 	{
 		
 	}
