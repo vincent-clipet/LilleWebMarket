@@ -1,13 +1,4 @@
 package beans;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 
 
@@ -20,7 +11,7 @@ public class User
 	private int id;
 	private String login;
 	private transient String password;
-	private String role;
+	//private String[] roles;
 	private int money;
 
 
@@ -31,81 +22,16 @@ public class User
 	//
 	public User()
 	{
-		
+
 	}
-	
-	private User(int id, String login, String password, String role, int money)
+
+	private User(int id, String login, String password, int money)
 	{
 		this.id = id;
 		this.login = login;
 		this.password = password;
-		this.role = role;
 		this.money = money;
 	}
-
-
-
-
-
-	//
-	// --- Methods ----------------------------
-	//
-	public static User getUser(String login)
-	{
-		try
-		{
-			Context initialContext = new InitialContext();
-			Context context = (Context) initialContext.lookup("java:comp/env");
-			DataSource ds = (DataSource) context.lookup("base1"); //TODO: config
-			Connection conn = ds.getConnection();
-			Statement st = conn.createStatement();
-			
-			ResultSet rs = st.executeQuery("SELECT * FROM users WHERE login='"+ login +"';");
-			rs.next();
-			
-			return new User(rs.getInt("user_id"), rs.getString("login"), rs.getString("password"), rs.getString("role"), rs.getInt("money"));
-		}
-		catch (NamingException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
-	public static User getNewUser(String login, String password)
-	{
-		try
-		{
-			Context initialContext = new InitialContext();
-			Context context = (Context) initialContext.lookup("java:comp/env");
-			DataSource ds = (DataSource) context.lookup("base1"); //TODO: config
-			Connection conn = ds.getConnection();
-			Statement st = conn.createStatement();
-			
-			st.executeUpdate("INSERT INTO users(login, password) VALUES('"+ login +"', '"+ password +"');");
-			ResultSet rs = st.executeQuery("SELECT * FROM users WHERE login='"+ login +"';");
-			rs.next();
-			
-			return new User(rs.getInt("user_id"), rs.getString("login"), rs.getString("password"), rs.getString("role"), rs.getInt("money"));
-		}
-		catch (NamingException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-
-
 
 
 
@@ -137,19 +63,9 @@ public class User
 		return this.password;
 	}
 
-	public void setPasswword(String password)
+	public void setPassword(String password)
 	{
 		this.password = password;
-	}
-
-	public String getRole()
-	{
-		return this.role;
-	}
-
-	public void setRole(String role)
-	{
-		this.role = role;
 	}
 
 	public int getMoney()
@@ -159,7 +75,7 @@ public class User
 
 	public void setMoney(int money)
 	{
-		this.id = money;
+		this.money = money;
 	}
 
 }

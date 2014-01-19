@@ -29,6 +29,10 @@
         <param-value>Vincent CLIPET</param-value>
         <description>Site Web de bourse d'informations</description>
     </context-param>
+	
+	<listener>
+		<listener-class>dao.DAOFactoryInitializer</listener-class>
+	</listener>
 
     <!--       Recuperation des erreurs      -->
     <!-- A commenter lors des mises au point -->

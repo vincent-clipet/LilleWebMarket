@@ -1,41 +1,71 @@
 <Context path="/LilleWebMarket" docBase="LilleWebMarket" debug="99">
 
-  <!-- Definition du pool -->
-  <Resource name="base1" auth="Container" type="javax.sql.DataSource"
-  maxActive="8" maxIdle="4" maxWait="10000"
-  username="clipetv" password="moi" driverClassName="org.postgresql.Driver"
-  url="jdbc:postgresql://psqlserv/da2i" />
+	<!-- Definition du pool -->
+	<Resource
+		name="jdbc/base1"
+		auth="Container"
+		type="javax.sql.DataSource"
+		maxActive="8"
+		maxIdle="4"
+		maxWait="10000"
+		username="postgres"
+		password="root"
+		driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://localhost/da2i"
+	/>
+	
+	<ResourceLink
+		global="jdbc/base1"
+		name="jdbc/base1"
+		type="javax.sql.DataSource"
+	/>
+  
 
-  <!-- Definition du Realm sans pool -->
+  
+  
+	<!-- Definition du Realm sans pool -->
+	<!--
+	<Realm 
+		className="org.apache.catalina.realm.JDBCRealm"
+		debug="99"
+		driverName="org.postgresql.Driver"
+		connectionURL="jdbc:postgresql://psqlserv/da2i"
+		connectionName="clipetv"
+		connectionPassword="moi"
+		userTable="users"
+		userNameCol="user_name"
+		userCredCol="user_pass"
+		userRoleTable="user_roles"
+		roleNameCol="role_name"
+	/>
+	-->
 
-<!--   <Realm  className="org.apache.catalina.realm.JDBCRealm" debug="99"
-           driverName="org.postgresql.Driver"
-           connectionURL="jdbc:postgresql://psqlserv/da2i"
-	   connectionName="clipetv" connectionPassword="moi"
-           userTable="users" userNameCol="user_name" userCredCol="user_pass"
-                   userRoleTable="user_roles" roleNameCol="role_name"/>
--->
 
-
+	
+	
 
   <!-- Definition du Realm via le pool -->
-  <Realm  className="org.apache.catalina.realm.DataSourceRealm" debug="99"
-          dataSourceName="base1" localDataSource="false"
-          userTable="users" userNameCol="login" userCredCol="password"
-          userRoleTable="users" roleNameCol="role"  />
-<!--
-<Realm  className="org.apache.catalina.realm.DataSourceRealm" debug="99"
-          dataSourceName="mabase" localDataSource="true"
-          userTable="users" userNameCol="user_name" userCredCol="user_pass"
-          userRoleTable="user_roles" roleNameCol="role_name"  />
--->
+	<Realm
+		className="org.apache.catalina.realm.DataSourceRealm"
+		debug="99"
+        dataSourceName="jdbc/base1"
+		localDataSource="false"
+        userTable="users"
+		userNameCol="login"
+		userCredCol="password"
+        userRoleTable="users_roles"
+		roleNameCol="role"
+	/>
 
 
 
 
   <!-- Definition d'une valve d'acces -->
-  <Valve className="org.apache.catalina.valves.AccessLogValve"
-           prefix="lillewebmarket_access1." suffix=".txt"
-           pattern="common"/>
+  <Valve
+	className="org.apache.catalina.valves.AccessLogValve"
+    prefix="lillewebmarket_access1."
+	suffix=".txt"
+    pattern="common"
+	/>
  
 </Context>
