@@ -26,7 +26,7 @@ CREATE TABLE markets
 	CONSTRAINT pk_market PRIMARY KEY (market_id),
 	
 	info TEXT NOT NULL,
-	oppposite_info TEXT NOT NULL,
+	opposite_info TEXT NOT NULL,
 	end_date DATE NOT NULL,
 	result BOOL DEFAULT NULL,
 	
