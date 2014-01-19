@@ -22,10 +22,6 @@
         <url-pattern>/servlet/*</url-pattern>
     </servlet-mapping>
 
-    <listener>
-        <listener-class>tools.SessionTrack</listener-class>
-    </listener>
-
     <!-- Parametrages propres a cette application web -->
     <context-param>
         <param-name>Developpeurs</param-name>
@@ -81,7 +77,7 @@
         </auth-constraint>
     </security-constraint>
     
-    <security-constraint>
+    <!--<security-constraint>
         <web-resource-collection>
             <web-resource-name>Profile</web-resource-name><url-pattern>/profile</url-pattern>
         </web-resource-collection>
@@ -89,7 +85,7 @@
             <role-name>user</role-name>
             <role-name>marketmaker</role-name>
         </auth-constraint>
-    </security-constraint>
+    </security-constraint>-->
 
 
     <!-- La maniere dont la page de login est affichee -->
