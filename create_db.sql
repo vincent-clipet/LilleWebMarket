@@ -28,7 +28,7 @@ CREATE TABLE markets
 	info TEXT NOT NULL,
 	opposite_info TEXT NOT NULL,
 	end_date DATE NOT NULL,
-	result BOOL DEFAULT NULL,
+	winner BOOL DEFAULT NULL,
 	
 	creator_id INTEGER NOT NULL,
 	CONSTRAINT fk_market_creator_id FOREIGN KEY (creator_id) REFERENCES users(user_id)
@@ -67,11 +67,11 @@ CREATE TABLE logs
 -- SELL
 CREATE TABLE sells
 (
-	sells_id SERIAL,
-	CONSTRAINT pk_sells PRIMARY KEY (sells_id),
+	sell_id SERIAL,
+	CONSTRAINT pk_sells PRIMARY KEY (sell_id),
 	
-	sell_dates DATE NOT NULL,
-	price_sells INTEGER NOT NULL,
+	sell_date DATE NOT NULL,
+	price_sell INTEGER NOT NULL,
 	
 	stock_id INTEGER NOT NULL,
 	CONSTRAINT fk_sells_stock_id FOREIGN KEY (stock_id) REFERENCES stocks(stock_id)
@@ -89,4 +89,17 @@ INSERT INTO users_roles(login) VALUES('user1');
 INSERT INTO users_roles(login) VALUES('user2');
 INSERT INTO users_roles(login, role) VALUES('admin1', 'marketmaker');
 
+-- MARKETS
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('On aura une bonne note à ce projet', 'On n aura pas une bonne note à ce projet', '01-01-2016 00:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id, winner) VALUES ('On va galérer cette année', 'Tout va être easy cette année', '01-01-2014 01:00:00', 3, 'false');
 
+-- STOCKS
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 1, 1);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (12, 'true', 2, 1);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (1, 'false', 3, 1);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 1, 1);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (8, 'true', 2, 1);
+
+-- SELLS
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES ('02-01-2014 23:05:49', 70, 4);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES ('03-01-2014 20:50:01', 65, 5);
