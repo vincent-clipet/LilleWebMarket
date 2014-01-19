@@ -25,14 +25,6 @@ public class User
 
 	}
 
-	private User(int id, String login, String password, int money)
-	{
-		this.id = id;
-		this.login = login;
-		this.password = password;
-		this.money = money;
-	}
-
 
 
 	//

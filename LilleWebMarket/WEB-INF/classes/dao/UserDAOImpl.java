@@ -30,7 +30,7 @@ public class UserDAOImpl implements UserDAO
 	//
 	// METHODS
 	//
-	private static User map(ResultSet rs) throws SQLException
+	private User map(ResultSet rs) throws SQLException
 	{
 		User u = new User();
 		u.setId(rs.getInt("user_id"));
@@ -104,6 +104,18 @@ public class UserDAOImpl implements UserDAO
 		}
 
 		return u;
+	}
+	
+	public boolean promote(String role)
+	{
+		//TODO
+		return false;
+	}
+	
+	public boolean demote(String role)
+	{
+		//TODO
+		return false;
 	}
 
 }
