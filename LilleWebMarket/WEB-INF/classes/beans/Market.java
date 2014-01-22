@@ -11,7 +11,7 @@ public class Market
     private String info;
     private String opposite_info;
     private String end_date; // TODO: Voir l'utilisation des types Date de java
-    private boolean result;
+    private boolean winner;
     private int creator_id;
 	
     //
@@ -23,13 +23,13 @@ public class Market
 	
     }
 	
-    public Market(int market_id, String info, String opposite_info, String end_date, boolean result, int creator_id)
+    public Market(int market_id, String info, String opposite_info, String end_date, boolean winner, int creator_id)
     {
 	this.market_id = market_id;
 	this.info = info;
 	this.opposite_info = opposite_info;
 	this.end_date = end_date;
-	this.result = result;
+	this.winner = winner;
 	this.creator_id = creator_id;
     }
 	
@@ -78,14 +78,14 @@ public class Market
 	return end_date;
     }
 
-    public void setResult(boolean result)
+    public void setWinner(boolean winner)
     {
-	this.result = result;
+	this.winner = winner;
     }
 
-    public boolean getResult ()
+    public boolean getWinner ()
     {
-	return result;
+	return winner;
     }
 
     public void setCreator_id(int creator_id)
