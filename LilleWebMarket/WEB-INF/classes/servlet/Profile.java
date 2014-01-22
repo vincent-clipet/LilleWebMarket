@@ -36,18 +36,14 @@ public class Profile extends HttpServlet
 		req.getSession(true);
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
+		
+		User u = new User();
+		userDao.getUser(req.getUserPrincipal().getName(), u);
 
-		User u = this.userDao.getUser("user1");
 		out.println("ID : " + u.getId() + "\n");
 		out.println("Login : " + u.getLogin() + "\n");
 		out.println("Password : " + u.getPassword() + "\n");
 		out.println("Money : " + u.getMoney() + "\n");
 		out.println("\n\n");
-		
-		User u2 = this.userDao.getUser("admin1");
-		out.println("ID : " + u2.getId() + "\n");
-		out.println("Login : " + u2.getLogin() + "\n");
-		out.println("Password : " + u2.getPassword() + "\n");
-		out.println("Money : " + u2.getMoney() + "\n");
 	}
 }

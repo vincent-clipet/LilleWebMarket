@@ -104,5 +104,15 @@ public class DAOFactory
 	{
 		return new UserDAOImpl(this);
 	}
+	
+	public StockDAO getStockDAO()
+	{
+		return new StockDAOImpl(this);
+	}
+	
+	public MarketDAO getMarketDAO()
+	{
+		return new MarketDAOImpl(this);
+	}
 
 }
