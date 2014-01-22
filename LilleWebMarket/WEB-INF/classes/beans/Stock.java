@@ -9,8 +9,8 @@ public class Stock
 	private int id;
 	private int quantity;
 	private boolean opposite;
-	private int owner_id;
-	private int market_id;
+	private int ownerId;
+	private int marketId;
 
 
 
@@ -59,22 +59,22 @@ public class Stock
 
 	public int getOwnerId()
 	{
-		return this.owner_id;
+		return this.ownerId;
 	}
 
-	public void setOwnerId(int owner_id)
+	public void setOwnerId(int ownerId)
 	{
-		this.owner_id = owner_id;
+		this.ownerId = ownerId;
 	}
 
 	public int getMarketId()
 	{
-		return this.market_id;
+		return this.marketId;
 	}
 
-	public void setMarketId(int market_id)
+	public void setMarketId(int marketId)
 	{
-		this.market_id = market_id;
+		this.marketId = marketId;
 	}
 
 }

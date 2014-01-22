@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -110,5 +111,34 @@ public class MarketDAOImpl implements MarketDAO
 	    }
 
 	return m;
-    }	
+    }
+    
+    public ArrayList<Market> getNextMarkets(int nb)
+    {
+    	Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Market> ret = new ArrayList<Market>(nb);
+
+		try
+		{
+			conn = this.factory.getConnection();
+			String req = "SELECT * FROM markets WHERE winner IS NOT NULL ORDER BY end_date ASC LIMIT ?;";
+			ps = DAOUtil.getPreparedStatement(conn, req, nb);
+			rs = ps.executeQuery();
+				
+			while (rs.next())
+				ret.add(map(rs, null));
+		}
+		catch (SQLException e)
+		{
+			throw new DAOException(e);
+		}
+		finally
+		{
+			DAOUtil.close(rs, ps, conn);
+		}
+
+		return ret;
+    }
 }
