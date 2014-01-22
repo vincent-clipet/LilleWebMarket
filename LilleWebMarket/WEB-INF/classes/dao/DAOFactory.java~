@@ -104,5 +104,10 @@ public class DAOFactory
 	{
 		return new UserDAOImpl(this);
 	}
+	
+	public void setUserDAO(User u)
+	{
+		return new UserDAOImpl(this);
+	}
 
 }

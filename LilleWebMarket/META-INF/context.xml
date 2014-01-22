@@ -1,4 +1,4 @@
-<Context path="/LilleWebMarket" docBase="LilleWebMarket" debug="99">
+<Context path="/LilleWebMarket" docBase="LilleWebMarket" debug="99" >
 
 	<!-- Definition du pool -->
 	<Resource
@@ -8,23 +8,23 @@
 		maxActive="8"
 		maxIdle="4"
 		maxWait="10000"
-		username="postgres"
-		password="root"
+		username="clipetv"
+		password="moi"
 		driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://localhost/da2i"
+		url="jdbc:postgresql://sqlserv:5432/da2i"
 	/>
 	
-	<ResourceLink
+	<!--<ResourceLink
 		global="jdbc/base1"
 		name="jdbc/base1"
 		type="javax.sql.DataSource"
-	/>
+	/>-->
   
 
   
   
 	<!-- Definition du Realm sans pool -->
-	<!--
+	
 	<Realm 
 		className="org.apache.catalina.realm.JDBCRealm"
 		debug="99"
@@ -33,18 +33,19 @@
 		connectionName="clipetv"
 		connectionPassword="moi"
 		userTable="users"
-		userNameCol="user_name"
-		userCredCol="user_pass"
-		userRoleTable="user_roles"
-		roleNameCol="role_name"
+		userNameCol="login"
+		userCredCol="password"
+		userRoleTable="users_roles"
+		roleNameCol="role"
 	/>
-	-->
+	
 
 
 	
 	
 
   <!-- Definition du Realm via le pool -->
+	<!--
 	<Realm
 		className="org.apache.catalina.realm.DataSourceRealm"
 		debug="99"
@@ -56,6 +57,7 @@
         userRoleTable="users_roles"
 		roleNameCol="role"
 	/>
+	-->
 
 
 

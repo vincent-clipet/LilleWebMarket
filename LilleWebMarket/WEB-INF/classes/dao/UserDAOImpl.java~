@@ -71,6 +71,11 @@ public class UserDAOImpl implements UserDAO
 
 		return u;
 	}
+	
+	public User createUser(String login, String password) throws DAOException
+	{
+		return createUser(login, password, null);
+	}
 
 	public User createUser(String login, String password, User u) throws DAOException
 	{

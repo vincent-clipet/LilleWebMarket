@@ -5,22 +5,6 @@
     "http://java.sun.com/j2ee/dtds/web-app_2.2.dtd">
 
 <web-app>
-     <servlet>
-        <servlet-name>invoker</servlet-name>
-        <servlet-class>
-          org.apache.catalina.servlets.InvokerServlet
-        </servlet-class>
-        <init-param>
-            <param-name>debug</param-name>
-            <param-value>0</param-value>
-        </init-param>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>invoker</servlet-name>
-        <url-pattern>/servlet/*</url-pattern>
-    </servlet-mapping>
 
     <!-- Parametrages propres a cette application web -->
     <context-param>
@@ -81,7 +65,7 @@
         </auth-constraint>
     </security-constraint>
     
-    <!--<security-constraint>
+    <security-constraint>
         <web-resource-collection>
             <web-resource-name>Profile</web-resource-name><url-pattern>/profile</url-pattern>
         </web-resource-collection>
@@ -89,7 +73,7 @@
             <role-name>user</role-name>
             <role-name>marketmaker</role-name>
         </auth-constraint>
-    </security-constraint>-->
+    </security-constraint>
 
 
     <!-- La maniere dont la page de login est affichee -->
