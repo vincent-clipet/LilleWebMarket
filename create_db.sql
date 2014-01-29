@@ -90,8 +90,8 @@ INSERT INTO users_roles(login) VALUES('user2');
 INSERT INTO users_roles(login, role) VALUES('admin1', 'marketmaker');
 
 -- MARKETS
-INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('On aura une bonne note à ce projet', 'On n aura pas une bonne note à ce projet', '01-01-2016 00:00:00', 3);
-INSERT INTO markets(info, opposite_info, end_date, creator_id, winner) VALUES ('On va galérer cette année', 'Tout va être easy cette année', '01-01-2014 01:00:00', 3, 'false');
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('On aura une bonne note à ce projet', 'On n aura pas une bonne note a ce projet', '01-01-2016 00:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id, winner) VALUES ('On va galerer cette annee', 'Tout va etre easy cette annee', '01-01-2014 01:00:00', 3, 'false');
 
 -- STOCKS
 INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 1, 1);
