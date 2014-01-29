@@ -123,7 +123,7 @@ public class MarketDAOImpl implements MarketDAO
 		try
 		{
 			conn = this.factory.getConnection();
-			String req = "SELECT * FROM markets WHERE winner IS NOT NULL ORDER BY end_date ASC LIMIT ?;";
+			String req = "SELECT * FROM markets WHERE winner IS NULL ORDER BY end_date ASC LIMIT ?;";
 			ps = DAOUtil.getPreparedStatement(conn, req, nb);
 			rs = ps.executeQuery();
 				
