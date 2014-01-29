@@ -27,7 +27,7 @@ CREATE TABLE markets
 	
 	info TEXT NOT NULL,
 	opposite_info TEXT NOT NULL,
-	end_date DATE NOT NULL,
+	end_date TIMESTAMP NOT NULL,
 	winner BOOL DEFAULT NULL,
 	
 	creator_id INTEGER NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE logs
 	log_id SERIAL,
 	CONSTRAINT pk_log PRIMARY KEY (log_id),
 	
-	sell_date DATE NOT NULL,
+	sell_date TIMESTAMP NOT NULL,
 	log_price INTEGER NOT NULL,
 	log_quantity INTEGER NOT NULL,
 	
@@ -70,7 +70,7 @@ CREATE TABLE sells
 	sell_id SERIAL,
 	CONSTRAINT pk_sells PRIMARY KEY (sell_id),
 	
-	sell_date DATE NOT NULL,
+	sell_date TIMESTAMP NOT NULL,
 	price_sell INTEGER NOT NULL,
 	
 	stock_id INTEGER NOT NULL,
@@ -83,16 +83,23 @@ CREATE TABLE sells
 INSERT INTO users(login, password) VALUES('user1', 'user1');
 INSERT INTO users(login, password) VALUES('user2', 'user2');
 INSERT INTO users(login, password) VALUES('admin1', 'admin1');
+INSERT INTO users(login, password) VALUES('pierre', 'pierre');
+INSERT INTO users(login, password) VALUES('jean', 'jean');
+
 
 -- ROLES
 INSERT INTO users_roles(login) VALUES('user1');
 INSERT INTO users_roles(login) VALUES('user2');
+INSERT INTO users_roles(login) VALUES('pierre');
+INSERT INTO users_roles(login) VALUES('jean');
 INSERT INTO users_roles(login, role) VALUES('admin1', 'marketmaker');
 
 -- MARKETS
-INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('On aura une bonne note à ce projet', 'On n''aura pas une bonne note à ce projet', '01-01-2016 00:00:00', 3);
-INSERT INTO markets(info, opposite_info, end_date, creator_id, winner) VALUES ('On va galérer en système cette année', 'Tout va être easy en système cette année', '01-01-2014 01:00:00', 3, 'false');
-INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Demode arrivera 1 fois à l''heure cette année', 'Demode n''arrivera jamais à l''heure cette année', '30-03-2014 01:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('On aura une bonne note Ã  ce projet', 'On n''aura pas une bonne note Ã  ce projet', TIMESTAMP '2016-01-01 00:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id, winner) VALUES ('On va galÃ©rer en systÃ¨me cette annÃ©e', 'Tout va Ãªtre easy en systÃ¨me cette annÃ©e', TIMESTAMP '2014-01-01 01:00:00', 3, 'false');
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Demode arrivera 1 fois Ã  l''heure cette annÃ©e', 'Demode n''arrivera jamais Ã  l''heure cette annÃ©e', TIMESTAMP '2014-03-30 01:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Marche +', 'Marche-', TIMESTAMP '2014-03-30 01:00:00', 3);
+
 
 -- STOCKS
 INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 1, 1);
@@ -101,6 +108,14 @@ INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (1, 'false', 
 INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 1, 1);
 INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (8, 'true', 2, 1);
 
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (2, 'false', 4, 4);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 4, 4);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (3, 'false', 4, 4);
+
+
 -- SELLS
-INSERT INTO sells(sell_date, price_sell, stock_id) VALUES ('02-01-2014 23:05:49', 70, 4);
-INSERT INTO sells(sell_date, price_sell, stock_id) VALUES ('03-01-2014 20:50:01', 65, 5);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-02 23:05:49', 70, 4);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-03 20:50:01', 65, 5);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-04 20:50:01', 90, 6);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-05 20:50:01', 80, 7);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-06 20:50:01', 60, 8);
