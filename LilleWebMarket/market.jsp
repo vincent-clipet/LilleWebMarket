@@ -26,7 +26,7 @@
 	   %>
 	
 	<%
-	   marketDao.getMarket(request.getParameter("id"), marketBean);
+	   marketDao.getMarket(Integer.parseInt(request.getParameter("id")), marketBean);
 	   %>
 	
 	<h1 class='titre-marche' >Info : <% out.write(request.getParameter("opposite").equals("false")?marketBean.getInfo():marketBean.getOpposite_info()); %></h1>
