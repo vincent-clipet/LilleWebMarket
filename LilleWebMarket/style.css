@@ -1,0 +1,79 @@
+html
+{
+    
+}
+
+#header
+{
+    background: #00afe9;
+    color: white;
+}
+
+#marches
+{
+    background: #eee;
+    margin: 5px;
+    padding: 10px;
+}
+
+.titre
+{
+    background: #ccc;
+    color: #404040;
+}
+
+#marches ul li
+{
+    margin: 2px 2px 0;
+    background: #ddd;
+}
+
+.titre-marche
+{
+    background: #eee;
+    margin: 5px;
+    padding: 10px;
+}
+
+.pronostic a
+{
+    color: #101010;
+}
+
+.pronostic a:hover
+{
+    color: #d50;
+}
+
+.stocks
+{
+    margin: 10px;
+}
+
+#vendeurs
+{
+    background: #fbb;
+}
+
+#vendeurs h1
+{
+    background: #f88;
+}
+
+#acheteurs
+{
+    background: #bfb;
+}
+
+#acheteurs h1
+{
+    background: #8f8;    
+}
+
+.market-maker
+{
+    padding: 5px;
+    margin: 10px;
+    border: solid 2px  #00afe9;
+    
+}
