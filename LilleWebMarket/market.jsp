@@ -1,5 +1,9 @@
 <%@ page import="dao.DAOFactory" %> 
 <%@ page import="dao.MarketDAO" %> 
+<%@ page import="java.util.ArrayList" %> 
+<%@ page import="beans.Sell" %> 
+
+
 
 <html>
   <head>
@@ -15,23 +19,52 @@
       </div>
 
 	<jsp:useBean id="marketBean" scope="session" class="beans.Market" />
-	
+	<jsp:useBean id="sellBean" scope="session" class="beans.Sell" />
+
 	<%!
 	   MarketDAO marketDao;
-	   
+	   ArrayList<Sell> asks;
+	   ArrayList<Sell> bids;
+	   boolean opposite;
+
 	   public void jspInit()
 	   {
 	   marketDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getMarketDAO();
 	   }
+
 	   %>
 	
 	<%
+	   try {opposite = Boolean.parseBoolean(request.getParameter("opposite"));}
+	   catch (Exception e) {opposite = false;}
+
 	   marketDao.getMarket(Integer.parseInt(request.getParameter("id")), marketBean);
+
+	   asks = marketDao.getAsks(opposite);
+	   bids = marketDao.getBids(opposite);
 	   %>
 	
-	<h1 class='titre-marche' >Info : <% out.write(request.getParameter("opposite").equals("false")?marketBean.getInfo():marketBean.getOpposite_info()); %></h1>
+	<h1 class='titre-marche' >Info : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
 
-	
+	<table class="asks">
+
+	  <tr><th>Nom</th><th>Quantite</th><th>Prix</th></tr>
+	  <% for (Sell s : asks)
+	   {
+	   sellBean = s;
+		 %><tr><td><%= sellBean.getOwnerName() %></td><td><%= sellBean.getQuantity() %></td><td><%= sellBean.getPrice() %></td></tr><%}%>
+
+	</table>
+
+	<table class="asks">
+
+	  <tr><th>Nom</th><th>Quantite</th><th>Prix</th></tr>
+	  <% for (Sell s : bids)
+	   {
+	   sellBean = s;
+		 %><tr><td><%= sellBean.getOwnerName() %></td><td><%= sellBean.getQuantity() %></td><td><%= sellBean.getPrice() %></td></tr><%}%>
+
+	</table>
 
       <div id='profil'>
 	<h1 class='titre'>Vendeurs</h1>

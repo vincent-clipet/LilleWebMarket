@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import beans.Market;
+import beans.Sell;
+
 
 public class MarketDAOImpl implements MarketDAO
 {
@@ -44,6 +46,18 @@ public class MarketDAOImpl implements MarketDAO
 	return m;
     }
 
+
+    private Sell mapSell(ResultSet rs, Sell s) throws SQLException
+    {
+	if (s == null)
+	    s = new Sell();
+
+	s.setOwnerName(rs.getString("ownername"));
+	s.setQuantity(rs.getInt("quantity"));
+	s.setPrice(rs.getInt("price"));
+
+	return s;
+    }
 
     /** Gets the market corresponding to this id
      * @return the asked user if it existed, else null  */
@@ -111,6 +125,81 @@ public class MarketDAOImpl implements MarketDAO
 	    }
 
 	return m;
+    }
+
+    public ArrayList<Sell> getAsks(boolean opposite)
+    {
+	opposite = !opposite;
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	ArrayList<Sell> ret = new ArrayList<Sell>();
+
+	try
+	    {
+		conn = this.factory.getConnection();
+		
+		//		String req = "SELECT * FROM stocks WHERE winner IS NOT NULL ORDER BY end_date ASC LIMIT ?;";
+
+
+		String req = "SELECT login as ownername, quantity, (100-price_sell) as price";
+		req += " FROM sells sl, stocks st, users u";
+		req += " WHERE st.market_id = 4 AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ?";
+
+		ps = DAOUtil.getPreparedStatement(conn, req, opposite);
+		rs = ps.executeQuery();
+				
+		while (rs.next())
+		    ret.add(mapSell(rs, null));
+	    }
+	catch (SQLException e)
+	    {
+		throw new DAOException(e);
+	    }
+	finally
+	    {
+		DAOUtil.close(rs, ps, conn);
+	    }
+
+	return ret;
+
+    }
+    
+    public ArrayList<Sell> getBids(boolean opposite)
+    {
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	ArrayList<Sell> ret = new ArrayList<Sell>();
+
+	try
+	    {
+		conn = this.factory.getConnection();
+		
+		//		String req = "SELECT * FROM stocks WHERE winner IS NOT NULL ORDER BY end_date ASC LIMIT ?;";
+
+
+		String req = "SELECT login as ownername, quantity, price_sell as price";
+		req += " FROM sells sl, stocks st, users u";
+		req += " WHERE st.market_id = 4 AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ?";
+
+		ps = DAOUtil.getPreparedStatement(conn, req, opposite);
+		rs = ps.executeQuery();
+				
+		while (rs.next())
+		    ret.add(mapSell(rs, null));
+	    }
+	catch (SQLException e)
+	    {
+		throw new DAOException(e);
+	    }
+	finally
+	    {
+		DAOUtil.close(rs, ps, conn);
+	    }
+
+	return ret;
+
     }
     
     public ArrayList<Market> getNextMarkets(int nb)
