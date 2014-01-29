@@ -1,10 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="dao.DAOFactory" %> 
-<%@ page import="dao.UserDAO" %> 
+<%@ page import="dao.UserDAO" %>
 
 <html>
+
 	<%!
 		UserDAO userDao;
-	
+
 		public void jspInit()
 		{
 			userDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getUserDAO();
@@ -13,14 +15,14 @@
 
 	<jsp:useBean id="userBean" scope="session" class="beans.User" />
 	<%
-		userDao.getUser("admin1", userBean);
+		//userDao.getUser(request.getUserPrincipal().getName(), userBean); // doesn't work, don't know why
 	%>
 
   <head>
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-    <title>LilleWebMarket - Accueil</title>
+    <title>LilleWebMarket - Profil</title>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
   </head>
+  
   <body>
     <div id='page'> 
 
