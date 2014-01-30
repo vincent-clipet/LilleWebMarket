@@ -23,11 +23,11 @@ public interface MarketDAO
     /** Returns an arraylist of asks
      * for this market (side according to the boolean)
      */
-    ArrayList<Sell> getAsks(boolean opposite);
+    ArrayList<Sell> getAsks(int market_id, boolean opposite);
     
     /** Returns an arraylist of bids
      * for this market (side according to the boolean)
      */
-    ArrayList<Sell> getBids(boolean opposite);
+    ArrayList<Sell> getBids(int market_id, boolean opposite);
 	
 }

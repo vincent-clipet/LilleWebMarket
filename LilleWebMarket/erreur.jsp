@@ -10,13 +10,14 @@
 <body>
 
    <h1> Page de gestion d'erreur</h1>
-   <h3> Un probleme de type 
-"<%
+   <h3> Un probleme de type </h3><br />
+<pre>"<%
 	String m = request.getParameter("message");
+	out.println("<br />");
 	if (m!=null) out.print(m);
 	if (exception!=null) out.print(exception.getMessage());
- %>" est survenu.</h3> 
-
+ %>" est survenu. 
+</pre>
 
 <a href=menu.html>Retour</a>
 

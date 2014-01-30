@@ -127,7 +127,7 @@ public class MarketDAOImpl implements MarketDAO
 	return m;
     }
 
-    public ArrayList<Sell> getAsks(boolean opposite)
+    public ArrayList<Sell> getAsks(int market_id, boolean opposite)
     {
 	opposite = !opposite;
 	Connection conn = null;
@@ -144,9 +144,9 @@ public class MarketDAOImpl implements MarketDAO
 
 		String req = "SELECT login as ownername, quantity, (100-price_sell) as price";
 		req += " FROM sells sl, stocks st, users u";
-		req += " WHERE st.market_id = 4 AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ?";
+		req += " WHERE st.market_id = ? AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ? ORDER BY price DESC";
 
-		ps = DAOUtil.getPreparedStatement(conn, req, opposite);
+		ps = DAOUtil.getPreparedStatement(conn, req, market_id,opposite);
 		rs = ps.executeQuery();
 				
 		while (rs.next())
@@ -165,7 +165,7 @@ public class MarketDAOImpl implements MarketDAO
 
     }
     
-    public ArrayList<Sell> getBids(boolean opposite)
+    public ArrayList<Sell> getBids(int market_id, boolean opposite)
     {
 	Connection conn = null;
 	PreparedStatement ps = null;
@@ -181,9 +181,9 @@ public class MarketDAOImpl implements MarketDAO
 
 		String req = "SELECT login as ownername, quantity, price_sell as price";
 		req += " FROM sells sl, stocks st, users u";
-		req += " WHERE st.market_id = 4 AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ?";
+		req += " WHERE st.market_id = ? AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ? ORDER BY price DESC";
 
-		ps = DAOUtil.getPreparedStatement(conn, req, opposite);
+		ps = DAOUtil.getPreparedStatement(conn, req, market_id, opposite);
 		rs = ps.executeQuery();
 				
 		while (rs.next())

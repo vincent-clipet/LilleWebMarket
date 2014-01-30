@@ -26,6 +26,7 @@
 	   ArrayList<Sell> asks;
 	   ArrayList<Sell> bids;
 	   boolean opposite;
+	   int market_id;
 
 	   public void jspInit()
 	   {
@@ -37,11 +38,14 @@
 	<%
 	   try {opposite = Boolean.parseBoolean(request.getParameter("opposite"));}
 	   catch (Exception e) {opposite = false;}
+	   
+	   try {market_id = Integer.parseInt(request.getParameter("id"));}
+	   catch (Exception e) {market_id = 0;}
 
 	   marketDao.getMarket(Integer.parseInt(request.getParameter("id")), marketBean);
 
-	   asks = marketDao.getAsks(opposite);
-	   bids = marketDao.getBids(opposite);
+	   asks = marketDao.getAsks(market_id, opposite);
+	   bids = marketDao.getBids(market_id, opposite);
 	   %>
 	
 	<h1 class='titre-marche' >Info : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
