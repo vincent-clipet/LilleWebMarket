@@ -18,61 +18,70 @@
 	<img src="logo.png" alt='logo' />
       </div>
 
-	<jsp:useBean id="marketBean" scope="session" class="beans.Market" />
-	<jsp:useBean id="sellBean" scope="session" class="beans.Sell" />
+      <jsp:useBean id="marketBean" scope="session" class="beans.Market" />
+      <jsp:useBean id="sellBean" scope="session" class="beans.Sell" />
 
-	<%!
-	   MarketDAO marketDao;
-	   ArrayList<Sell> asks;
-	   ArrayList<Sell> bids;
-	   boolean opposite;
-	   int market_id;
+      <%!
+	 MarketDAO marketDao;
+	 ArrayList<Sell> asks;
+	 ArrayList<Sell> bids;
+	 boolean opposite;
+	 int market_id;
 
-	   public void jspInit()
-	   {
-	   marketDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getMarketDAO();
-	   }
+	 public void jspInit()
+	 {
+	 marketDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getMarketDAO();
+	 }
 
-	   %>
-	
-	<%
-	   try {opposite = Boolean.parseBoolean(request.getParameter("opposite"));}
-	   catch (Exception e) {opposite = false;}
-	   
-	   try {market_id = Integer.parseInt(request.getParameter("id"));}
-	   catch (Exception e) {market_id = 0;}
+	 %>
+      
+      <%
+	 try {opposite = Boolean.parseBoolean(request.getParameter("opposite"));}
+	 catch (Exception e) {opposite = false;}
+	 
+	 try {market_id = Integer.parseInt(request.getParameter("id"));}
+	 catch (Exception e) {market_id = 0;}
 
-	   marketDao.getMarket(Integer.parseInt(request.getParameter("id")), marketBean);
+	 marketDao.getMarket(Integer.parseInt(request.getParameter("id")), marketBean);
 
-	   asks = marketDao.getAsks(market_id, opposite);
-	   bids = marketDao.getBids(market_id, opposite);
-	   %>
-	
-	<h1 class='titre-marche' >Info : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
+	 asks = marketDao.getAsks(market_id, opposite);
+	 bids = marketDao.getBids(market_id, opposite);
+	 %>
 
-	<table class="asks">
 
+      <div id='menu'>
+        <ul>
+          <li><a href='index.jsp'>Marchés</a></li>
+	  <li><a href='market.jsp?id=<%= request.getParameter("id") %>&opposite=<%= !opposite %>'>Aller au marché opposé</a></li>
+          <ul>
+      </div>
+      
+      <h1 class='titre-marche' >Info : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
+
+      <div id="asks" >
+	<h1 class="asks">Vendeurs</h1>
+	<table>
 	  <tr><th>Nom</th><th>Quantite</th><th>Prix</th></tr>
 	  <% for (Sell s : asks)
-	   {
-	   sellBean = s;
-		 %><tr><td><%= sellBean.getOwnerName() %></td><td><%= sellBean.getQuantity() %></td><td><%= sellBean.getPrice() %></td></tr><%}%>
-
+	     {
+	     sellBean = s;
+	     %><tr><td><%= sellBean.getOwnerName() %></td><td><%= sellBean.getQuantity() %></td><td><%= sellBean.getPrice() %></td></tr><%}%>
 	</table>
+      </div>
 
-	<table class="asks">
+      <div id="bids" >
+	<h1 class="bids">Acheteurs</h1>
+	<table>
 
 	  <tr><th>Nom</th><th>Quantite</th><th>Prix</th></tr>
 	  <% for (Sell s : bids)
-	   {
-	   sellBean = s;
-		 %><tr><td><%= sellBean.getOwnerName() %></td><td><%= sellBean.getQuantity() %></td><td><%= sellBean.getPrice() %></td></tr><%}%>
+	     {
+	     sellBean = s;
+	     %><tr><td><%= sellBean.getOwnerName() %></td><td><%= sellBean.getQuantity() %></td><td><%= sellBean.getPrice() %></td></tr><%}%>
 
 	</table>
-
-      <div id='profil'>
-	<h1 class='titre'>Vendeurs</h1>
       </div>
+
     </div>
   </body>
 </html>

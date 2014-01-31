@@ -28,8 +28,16 @@ html
     background: #ddd;
 }
 
+#menu li
+{
+    display: block;
+    float: left;
+    margin: 10px 40px;
+}
+
 .titre-marche
 {
+    clear: both;
     background: #eee;
     margin: 5px;
     padding: 10px;
@@ -50,22 +58,22 @@ html
     margin: 10px;
 }
 
-#vendeurs
+#asks
 {
     background: #fbb;
 }
 
-#vendeurs h1
+h1.asks
 {
     background: #f88;
 }
 
-#acheteurs
+#bids
 {
     background: #bfb;
 }
 
-#acheteurs h1
+h1.bids
 {
     background: #8f8;    
 }
