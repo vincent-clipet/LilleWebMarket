@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Beans compilation..."
+javac -cp $CLASSPATH:../LilleWebMarket/WEB-INF/classes/ ../LilleWebMarket/WEB-INF/classes/dao/*.java
+echo "done."
+
+echo "Servlets compilation..."
+javac -cp $CLASSPATH:../LilleWebMarket/WEB-INF/classes/ ../LilleWebMarket/WEB-INF/classes/servlet/*.java
+echo "done."
