@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="dao.DAOFactory" %> 
 <%@ page import="dao.MarketDAO" %> 
 <%@ page import="java.util.ArrayList" %> 
@@ -7,7 +8,6 @@
 
 <html>
   <head>
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
     <title>LilleWebMarket - Accueil</title>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
   </head>
@@ -53,10 +53,11 @@
         <ul>
           <li><a href='index.jsp'>Marchés</a></li>
 	  <li><a href='market.jsp?id=<%= request.getParameter("id") %>&opposite=<%= !opposite %>'>Aller au marché opposé</a></li>
-          <ul>
+        </ul>
       </div>
-      
-      <h1 class='titre-marche' >Info : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
+
+<div id='marches' >      
+      <h1 class='titre' >Info : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
 
       <div id="asks" >
 	<h1 class="asks">Vendeurs</h1>
@@ -81,7 +82,7 @@
 
 	</table>
       </div>
-
+</div>
     </div>
   </body>
 </html>

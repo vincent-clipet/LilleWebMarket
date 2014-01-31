@@ -1,6 +1,19 @@
+/* Global */
+
 html
 {
-    
+}
+
+body
+{
+}
+
+#page
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background-color: #eee
 }
 
 #header
@@ -20,6 +33,7 @@ html
 {
     background: #ccc;
     color: #404040;
+    clear: both;
 }
 
 #marches ul li
@@ -35,10 +49,22 @@ html
     margin: 10px 40px;
 }
 
+#menu li a
+{
+    color: #101010;
+}
+
+#menu li a:hover
+{
+    color: #d50;
+}
+
 .titre-marche
 {
+    background: #ccc;
+    color: #404040;
+
     clear: both;
-    background: #eee;
     margin: 5px;
     padding: 10px;
 }
@@ -57,6 +83,8 @@ html
 {
     margin: 10px;
 }
+
+/* market.jsp */
 
 #asks
 {
@@ -83,5 +111,4 @@ h1.bids
     padding: 5px;
     margin: 10px;
     border: solid 2px  #00afe9;
-    
 }
