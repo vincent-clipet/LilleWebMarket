@@ -37,37 +37,9 @@ public class DAOFactory
 	// METHODS
 	//
 	public static DAOFactory getInstance() throws DAOConfigException
-	{
-		Properties properties = new Properties();
-		//String db_url;
-		String db_driver;
-		//String db_user;
-		//String db_password;
+	{;
+		String db_driver = "org.postgresql.Driver"; //TODO: config
 		DataSource pool = null;
-
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream content = classLoader.getResourceAsStream(filename);
-
-		if (content == null)
-			throw new DAOConfigException("Properties file "+ filename +" not found.");
-
-		try
-		{
-			properties.load(content);
-			//db_url = properties.getProperty("db_url");
-			//db_driver = properties.getProperty("db_driver");
-			db_driver = "org.postgresql.Driver"; //TODO: config
-			//db_user = properties.getProperty("db_user");
-			//db_password = properties.getProperty("db_password");
-		}
-		catch (FileNotFoundException e)
-		{
-			throw new DAOConfigException("Properties file "+ filename +" not found.");
-		}
-		catch ( IOException e )
-		{
-			throw new DAOConfigException("Can't load properties file " + filename + ".");
-		}
 		
 		try
 		{
