@@ -1,0 +1,3 @@
+#!/bin/bash
+
+javac -cp $CLASSPATH:LilleWebMarket/WEB-INF/classes/ LilleWebMarket/WEB-INF/classes/dao/*.java
