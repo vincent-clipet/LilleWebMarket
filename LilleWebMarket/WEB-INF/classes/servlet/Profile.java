@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.RequestDispatcher;
 
 import beans.User;
 import dao.DAOFactory;
@@ -36,14 +38,18 @@ public class Profile extends HttpServlet
 		req.getSession(true);
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
+		HttpSession session = req.getSession(true);
 		
-		User u = new User();
-		userDao.getUser(req.getUserPrincipal().getName(), u);
-
-		out.println("ID : " + u.getId() + "\n");
-		out.println("Login : " + u.getLogin() + "\n");
-		out.println("Password : " + u.getPassword() + "\n");
-		out.println("Money : " + u.getMoney() + "\n");
-		out.println("\n\n");
+		User u = (User) (session.getAttribute("userBean"));
+		
+		if (u == null)
+		{
+			u = new User();
+			userDao.getUser(req.getUserPrincipal().getName(), u);
+			session.setAttribute("userBean", u);
+		}
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("profile.jsp");
+dispatcher.forward(req, res);
 	}
 }
