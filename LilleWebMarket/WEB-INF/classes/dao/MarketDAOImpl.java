@@ -207,13 +207,23 @@ public class MarketDAOImpl implements MarketDAO
     	Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ArrayList<Market> ret = new ArrayList<Market>(nb);
+		ArrayList<Market> ret = new ArrayList<Market>();
 
 		try
 		{
 			conn = this.factory.getConnection();
-			String req = "SELECT * FROM markets WHERE winner IS NULL ORDER BY end_date ASC LIMIT ?;";
-			ps = DAOUtil.getPreparedStatement(conn, req, nb);
+			
+			if (nb != -1)
+			{
+				String req = "SELECT * FROM markets WHERE winner IS NULL ORDER BY end_date ASC LIMIT ?;";
+				ps = DAOUtil.getPreparedStatement(conn, req, nb);
+			}
+			else
+			{
+				String req = "SELECT * FROM markets WHERE winner IS NULL ORDER BY end_date ASC;";
+				ps = DAOUtil.getPreparedStatement(conn, req);
+			}
+			
 			rs = ps.executeQuery();
 				
 			while (rs.next())

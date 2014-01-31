@@ -33,6 +33,6 @@ public class Market extends HttpServlet
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
 		
-		
+		req.getRequestDispatcher("market.jsp").forward(req, res);
 	}
 }

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
@@ -5,11 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
   </head>
   <body>
-    <div id='page'> 
-
-      <div id='header'>
-	<img src="logo.png" alt='logo' />
-      </div>
+	  <jsp:include page="header.jsp" />
 
       <div id='menu'>
 	<ul>
@@ -28,5 +25,6 @@
       </div>
 
     </div>
+    <jsp:include page="footer.jsp" />
   </body>
 </html>

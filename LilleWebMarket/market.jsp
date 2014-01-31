@@ -5,37 +5,31 @@
 <%@ page import="beans.Sell" %> 
 
 
-
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>LilleWebMarket - Accueil</title>
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
-  </head>
-  <body>
+	<head>
+		<title>LilleWebMarket - Accueil</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
+	</head>
+	
+	<body>
+  		<jsp:include page="header.jsp" />
 
-    <div id='header'>
-      <img src="logo.jpg" alt='logo' /><div id='main-title' >Lille Web Market</div>
-    </div>
+		<jsp:useBean id="marketBean" scope="session" class="beans.Market" />
+		<jsp:useBean id="sellBean" scope="session" class="beans.Sell" />
 
-    <div id='page'> 
-
-
-      <jsp:useBean id="marketBean" scope="session" class="beans.Market" />
-      <jsp:useBean id="sellBean" scope="session" class="beans.Sell" />
-
-      <%!
-	 MarketDAO marketDao;
-	 ArrayList<Sell> asks;
-	 ArrayList<Sell> bids;
-	 boolean opposite;
-	 int market_id;
-
-	 public void jspInit()
-	 {
-	 marketDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getMarketDAO();
-	 }
-
-	 %>
+		<%!
+			MarketDAO marketDao;
+			ArrayList<Sell> asks;
+			ArrayList<Sell> bids;
+			boolean opposite;
+			int market_id;
+		
+			public void jspInit()
+			{
+			marketDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getMarketDAO();
+			}
+		%>
       
       <%
 	 try {opposite = Boolean.parseBoolean(request.getParameter("opposite"));}
@@ -98,5 +92,6 @@
       </div><!-- end div #marches -->
     </div><!-- end div #page -->
 
+	<jsp:include page="footer.jsp" />
   </body>
 </html>

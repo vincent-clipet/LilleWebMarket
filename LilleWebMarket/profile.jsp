@@ -2,6 +2,9 @@
 <%@ page import="dao.DAOFactory" %> 
 <%@ page import="dao.UserDAO" %>
 
+
+
+<!DOCTYPE html>
 <html>
 
 	<jsp:useBean id="userBean" scope="session" class="beans.User" />
@@ -12,11 +15,7 @@
   </head>
   
   <body>
-    <div id='page'> 
-
-      <div id='header'>
-	<img src="logo.png" alt='logo' />
-      </div>
+  	<jsp:include page="header.jsp" />
 
       <div id='profil'>
 		<h1 class='titre'>Profil</h1>
@@ -30,5 +29,6 @@
       </div>
 
     </div>
+    <jsp:include page="footer.jsp" />
   </body>
 </html>

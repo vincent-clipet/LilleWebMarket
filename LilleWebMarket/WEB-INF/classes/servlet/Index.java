@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.RequestDispatcher;
 
 import beans.Market;
 import dao.DAOFactory;
@@ -35,25 +37,14 @@ public class Index extends HttpServlet
 	
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		req.getSession(true);
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
+		HttpSession session = req.getSession(true);
 		
-		ArrayList<Market> markets = marketDao.getNextMarkets(5);
+		ArrayList<Market> markets = marketDao.getNextMarkets(-1);
+		req.setAttribute("markets", markets);
 		
-		out.println("<li>\n");
-		
-		for (Market m : markets)
-		{
-			out.println("<p>\n");
-			out.println("	<strong>Marché:</strong><br />\n");
-			out.println("	" + m.getInfo() + "<br />\n");
-			out.println("	<strong>Date fin:</strong><br />\n");
-			out.println("	" + m.getEnd_date() + "<br />\n");
-			out.println("</p>\n");
-			out.println("\n");
-		}
-		
-		out.println("</li>\n");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+		dispatcher.forward(req, res);
 	}
 }

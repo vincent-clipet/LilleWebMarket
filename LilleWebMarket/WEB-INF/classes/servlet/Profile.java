@@ -35,7 +35,6 @@ public class Profile extends HttpServlet
 	
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		req.getSession(true);
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
 		HttpSession session = req.getSession(true);
@@ -50,6 +49,6 @@ public class Profile extends HttpServlet
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("profile.jsp");
-dispatcher.forward(req, res);
+		dispatcher.forward(req, res);
 	}
 }
