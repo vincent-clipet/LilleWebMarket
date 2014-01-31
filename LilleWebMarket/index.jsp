@@ -21,12 +21,11 @@
   </head>
   
   <body>
+    <div id='header'>
+      <img src="logo.jpg" alt='logo' /><div id='main-title' >Lille Web Market</div>
+    </div>
+
     <div id='page'> 
-
-      <div id='header'>
-	<img src="logo.png" alt='logo' />
-      </div>
-
       <div id='marches'>
 	<h1 class='titre'>Marchés en cours</h1>
 	

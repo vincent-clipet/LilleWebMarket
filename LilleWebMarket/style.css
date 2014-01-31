@@ -18,8 +18,27 @@ body
 
 #header
 {
-    background: #00afe9;
-    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background: white;
+    border: solid 1px black;
+}
+
+#header img
+{
+    position: relative;
+    left: 0%;
+    top: 0%;
+}
+
+#header #main-title
+{
+    display:inline;
+    font: 500 4em museo,serif;
+    color: black;
+    text-align: center;
+    margin-left: 10%;
 }
 
 #marches
@@ -40,6 +59,11 @@ body
 {
     margin: 2px 2px 0;
     background: #ddd;
+}
+
+#menu
+{
+    clear: both;
 }
 
 #menu li
@@ -104,6 +128,12 @@ h1.asks
 h1.bids
 {
     background: #8f8;    
+}
+
+#buy-form
+{
+    padding: 5px;
+    border: solid 1px  black;
 }
 
 .market-maker
