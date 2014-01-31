@@ -77,11 +77,15 @@
 
 
     <!-- La maniere dont la page de login est affichee -->
-    <login-config>
-        <auth-method>BASIC</auth-method>
-        <realm-name>AuthRealm</realm-name>
+    <login-config> 
+      <auth-method>FORM</auth-method> 
+      <realm-name>Nom affiché sur le formulaire</realm-name>
+      <form-login-config>
+	<form-login-page>login.jsp</form-login-page>
+	<form-error-page>erreur.jsp?Mauvais utilisateur</form-error-page>
+      </form-login-config>
     </login-config>
-
+    
     <!-- La liste des differents roles -->
     <security-role>
         <role-name>user</role-name>
