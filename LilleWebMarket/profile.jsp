@@ -4,19 +4,7 @@
 
 <html>
 
-	<%!
-		UserDAO userDao;
-
-		public void jspInit()
-		{
-			userDao = ((DAOFactory) (getServletContext().getAttribute("dao_factory"))).getUserDAO();
-		}
-	%>
-
 	<jsp:useBean id="userBean" scope="session" class="beans.User" />
-	<%
-		//userDao.getUser(request.getUserPrincipal().getName(), userBean); // doesn't work, don't know why
-	%>
 
   <head>
     <title>LilleWebMarket - Profil</title>
@@ -33,10 +21,11 @@
       <div id='profil'>
 		<h1 class='titre'>Profil</h1>
 		
-		<p>ID : <jsp:getProperty name="userBean" property="id" /></p>
-		<p>Login :<jsp:getProperty name="userBean" property="login" /></p>
-		<p>Password :<jsp:getProperty name="userBean" property="password" /></p>
-		<p>Money :<jsp:getProperty name="userBean" property="money" /></p>
+		<p>
+			ID : <jsp:getProperty name="userBean" property="id" /><br />
+			Login : <jsp:getProperty name="userBean" property="login" /><br />
+			Money : <jsp:getProperty name="userBean" property="money" /><br />
+		</p>
 		
       </div>
 
