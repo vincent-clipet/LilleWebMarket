@@ -87,8 +87,10 @@
 	</div><!-- end div #bids -->
 
 	<div id='buy-form' >
-	  <form method="get" action="buy-servlet">
-	    <input type="text" name="marketid" value='<%= marketId %>' hidden/>
+	  <form method="get" action='buy'>
+	    <input type="text" name="id" value='<%= marketId %>' hidden/>
+	    <input type="text" name="opposite" value='<%= marketId %>' hidden/>
+
 	    <input type="text" name="quantity" placeholder="quantity"/>
 	    <input type="text" name="price" placeholder="price"/>
 	    <input type="submit" value="Faire une offre"/>
