@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dao.DAOFactory" %> 
 <%@ page import="dao.MarketDAO" %>
 <%@ page import="beans.Market" %>

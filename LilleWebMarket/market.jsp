@@ -33,7 +33,7 @@
 
       <div id='menu'>
         <ul>
-          <li><a href='index.jsp'>Marchés</a></li>
+          <li><a href='index'>Marchés</a></li>
 	  <li><a href='market?id=<%= marketId %>&opposite=<%= !opposite %>'>Aller au marché opposé</a></li>
         </ul>
       </div>
