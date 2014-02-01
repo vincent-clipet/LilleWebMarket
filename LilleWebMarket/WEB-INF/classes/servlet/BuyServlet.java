@@ -42,15 +42,24 @@ import java.util.ArrayList;
 	    //	    HttpSession session = req.getSession(true);
 	    res.setContentType("text/html");
 	    PrintWriter out = res.getWriter();
+	    RequestDispatcher dispatcher;
 
 	    beans.Market m = (Market) (req.getAttribute("marketBean"));
 	    boolean opposite = false;
 	    int marketId = 0;
+	    int quantity = 0;
+	    int price = 0;
 
 	    try {opposite = Boolean.parseBoolean(req.getParameter("opposite"));}
 	    catch (Exception e) {}
 	    
 	    try {marketId = Integer.parseInt(req.getParameter("id"));}
+	    catch (Exception e) {}
+	    
+	    try{quantity = Integer.parseInt(req.getParameter("quantity"));}
+	    catch (Exception e) {}
+
+	    try{price = Integer.parseInt(req.getParameter("price"));}
 	    catch (Exception e) {}
 
 	    if (m == null)
@@ -58,7 +67,17 @@ import java.util.ArrayList;
 		    m = new Market();
 		}
 	    marketDao.getMarket(marketId, m);
-	
+
+	    if (quantity == 0 || price == 0)
+		{
+		    req.setAttribute("message", "La quantité et le prix doivent être différents de 0.");
+		}
+	    else
+		{
+		    
+		}
+
+
 	    ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
 	    ArrayList<Sell> bids = marketDao.getBids(marketId, opposite);
 
@@ -68,7 +87,7 @@ import java.util.ArrayList;
 	    req.setAttribute("asks", asks);
 	    req.setAttribute("bids", bids);
 
-	    RequestDispatcher dispatcher = req.getRequestDispatcher("market.jsp");
+	    dispatcher = req.getRequestDispatcher("market.jsp");
 	    dispatcher.forward(req, res);
 	}
     }

@@ -108,6 +108,11 @@ body
     margin: 10px;
 }
 
+.alert
+{
+    color: red;
+}
+
 /* market.jsp */
 
 #asks

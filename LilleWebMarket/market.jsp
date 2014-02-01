@@ -22,6 +22,7 @@
 	 boolean opposite;
 	 ArrayList<Sell> asks;
 	 ArrayList<Sell> bids;
+	 String message;
 	 %>
       
       <%
@@ -29,6 +30,7 @@
 	 opposite = (Boolean) (request.getAttribute("opposite"));
 	 asks = (ArrayList<Sell>) (request.getAttribute("asks"));
 	 bids = (ArrayList<Sell>) (request.getAttribute("bids"));
+	 message = (String) (request.getAttribute("message"));
 	 %>
 
       <div id='menu'>
@@ -40,7 +42,11 @@
 
       <div id='marches' >      
 	<h1 class='titre' >Pronostic : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
-
+	<%
+	   if (message != null) {
+	   %>
+	<p class='alert'><%= message %></p>
+	<% } %>
 	<div id="asks" >
 	  <h1 class="asks">Vendeurs</h1>
 	  <table>
