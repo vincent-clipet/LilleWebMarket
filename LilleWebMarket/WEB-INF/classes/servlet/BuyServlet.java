@@ -74,7 +74,9 @@ import java.util.ArrayList;
 		}
 	    else
 		{
-		    
+		    int userId = 1; // TODO
+		    String message = marketDao.putBid(quantity, price, userId, marketId, opposite);
+		 req.setAttribute("message", message);   
 		}
 
 

@@ -29,5 +29,10 @@ public interface MarketDAO
      * for this market (side according to the boolean)
      */
     ArrayList<Sell> getBids(int market_id, boolean opposite);
+
+    /** Try to put a bid with specified parameters
+     * Return an information message about the transaction.
+     */
+    String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite);
 	
 }
