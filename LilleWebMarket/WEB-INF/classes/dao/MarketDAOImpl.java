@@ -298,7 +298,7 @@ public class MarketDAOImpl implements MarketDAO
 
 				// "INSERT INTO logs VALUES (default, TIMESTAMP 'now', :sellPrice, :exchangeQuantity, :marketId) ;";
 				req2 = "INSERT INTO logs VALUES (default, TIMESTAMP 'now', ?, ?, ?);";
-				ps2 = DAOUtil.getPreparedStatement(conn, req2, exchangeQuantity, sellPrice, exchangeQuantity, marketId);
+				ps2 = DAOUtil.getPreparedStatement(conn, req2, sellPrice, exchangeQuantity, marketId);
 				ps2.executeUpdate();
 				log += "2.5<br>"; // DEBUG
 
