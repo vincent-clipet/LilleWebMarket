@@ -6,6 +6,7 @@ html
 
 body
 {
+
 }
 
 #page
@@ -14,6 +15,7 @@ body
     margin-right: auto;
     width: 80%;
     background-color: #eee
+
 }
 
 #header
@@ -22,7 +24,8 @@ body
     margin-right: auto;
     width: 80%;
     background: white;
-    border: solid 1px black;
+/*    border: solid 1px black;*/
+    box-shadow: 0px 0px 5px 1px grey; 
 }
 
 #header img
@@ -118,21 +121,34 @@ body
 #asks
 {
     background: #fbb;
+    border-radius: 5px;
+    border: solid 1px #f44;
+    margin: 10px;
+
 }
 
 h1.asks
 {
     background: #f88;
+    border-radius: 5px;
+    border: solid 3px #f44;
+    margin-top: 0px;
 }
 
 #bids
 {
     background: #bfb;
+    border-radius: 5px;
+    border: solid 1px #4f4;
+    margin: 10px;
 }
 
 h1.bids
 {
     background: #8f8;    
+    border-radius: 5px;
+    border: solid 3px #4f4;
+    margin-top: 0px;
 }
 
 #buy-form
@@ -146,4 +162,10 @@ h1.bids
     padding: 5px;
     margin: 10px;
     border: solid 2px  #00afe9;
+}
+
+table
+{
+    text-align: center;
+    font: 100 1em sans;
 }
