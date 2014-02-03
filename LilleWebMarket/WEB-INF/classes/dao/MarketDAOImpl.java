@@ -188,7 +188,7 @@ public class MarketDAOImpl implements MarketDAO
 
 		String req = "SELECT sl.stock_id as stockid, owner_id, quantity, (100-price_sell) as price";
 		req += " FROM markets m, stocks st, sells sl";
-		req += " WHERE m.market_id = ? AND opposite = ? AND st.stock_id = sl.stock_id AND m.market_id = st.market_id AND (100-price_sell) <= ? order by price desc;";
+		req += " WHERE m.market_id = ? AND opposite = ? AND st.stock_id = sl.stock_id AND m.market_id = st.market_id AND (100-price_sell) <= ? order by price asc;";
 
 		ps = DAOUtil.getPreparedStatement(conn, req, marketId, opposite, bidPrice);
 		rs = ps.executeQuery();

@@ -68,9 +68,9 @@ import java.util.ArrayList;
 		}
 	    marketDao.getMarket(marketId, m);
 
-	    if (quantity == 0 || price == 0)
+	    if (quantity == 0 || (price <= 0 || price >= 100))
 		{
-		    req.setAttribute("message", "La quantité et le prix doivent être différents de 0.");
+		    req.setAttribute("message", "La quantité doit être différente de 0 et le prix compris entre 0 et 99.");
 		}
 	    else
 		{
