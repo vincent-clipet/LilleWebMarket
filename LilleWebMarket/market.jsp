@@ -84,7 +84,7 @@
     </div>
 
     <div id='marches' >      
-      <h1 class='titre' >Pronostic : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
+      <h1 class='titre' >Pronostic : <% out.write( opposite ? marketBean.getOppositeInfo() : marketBean.getInfo()); %></h1>
       <%
 	 if (message != null) {
 	 %>
