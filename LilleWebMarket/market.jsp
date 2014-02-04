@@ -18,12 +18,15 @@
       // Some raw data (not necessarily accurate)
       var data = google.visualization.arrayToDataTable([
       ['Date', 'Volume', 'Prix'],
-      ['2004/05',  165,      938],
-      ['2005/06',  135,      1120],
-      ['2006/07',  157,      1167],
-      ['2007/08',  139,      1110],
-      ['2008/09',  136,      691]
-      ]);
+
+      <%= (String) (request.getAttribute("logData")) %>
+
+//      ['2004/05',  165,      938],
+//      ['2005/06',  135,      1120],
+//      ['2006/07',  157,      1167],
+//      ['2007/08',  139,      1110],
+//      ['2008/09',  136,      691]
+//      ]);
       
       var options = {
       title : 'Evolution du marché',
@@ -40,7 +43,7 @@
     </script>
   </head>
   <body>
-
+    <jsp:useBean id="userBean" scope="session" class="beans.User" />
     <jsp:include page="header.jsp" />
 
     <jsp:useBean id="marketBean" scope="request" class="beans.Market" />
@@ -61,6 +64,17 @@
        bids = (ArrayList<Sell>) (request.getAttribute("bids"));
        message = (String) (request.getAttribute("message"));
        %>
+
+    <div id='profil'>
+      <h1 class='titre'>Profil</h1>
+      <p>
+	ID : <jsp:getProperty name="userBean" property="id" /><br />
+	Login : <jsp:getProperty name="userBean" property="login" /><br />
+	Money : <jsp:getProperty name="userBean" property="money" /><br />
+	<form method='post' action='disconnect' ><input type="submit" value="Disconnect"/></form>
+      </p>
+    </div>
+    
 
     <div id='menu'>
       <ul>

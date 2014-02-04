@@ -17,8 +17,6 @@ public class DAOUtil
 
 	}
 
-
-
 	//
 	// METHODS
 	//

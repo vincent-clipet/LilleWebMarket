@@ -43,7 +43,9 @@ public class MarketServlet extends CustomHttpServlet
 
 		ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
 		ArrayList<Sell> bids = marketDao.getBids(marketId, opposite);
+		String logData = marketDao.getLogData(marketId);
 
+		req.setAttribute("logData", logData);
 		req.setAttribute("marketBean", m);
 		req.setAttribute("marketId", marketId);
 		req.setAttribute("opposite", opposite);

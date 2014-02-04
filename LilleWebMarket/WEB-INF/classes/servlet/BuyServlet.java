@@ -57,15 +57,8 @@ public class BuyServlet extends CustomHttpServlet
 			req.setAttribute("message", message);   
 		}
 
-		ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
-		ArrayList<Sell> bids = marketDao.getBids(marketId, opposite);
+		dispatcher = req.getRequestDispatcher("market");
+		dispatcher.forward(req, res);
 
-		req.setAttribute("marketBean", m);
-		req.setAttribute("marketId", marketId);
-		req.setAttribute("opposite", opposite);
-		req.setAttribute("asks", asks);
-		req.setAttribute("bids", bids);
-
-		super.sendToJsp("market.jsp");
 	}
 }

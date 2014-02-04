@@ -351,6 +351,48 @@ public class MarketDAOImpl implements MarketDAO
 		return log;
 	    }
     }
+
+    public String getLogData(int marketId)
+    {
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	String ret = "";
+
+	try
+	    {
+		conn = this.factory.getConnection();
+		String req = "SELECT DATE(sell_date) as sdate, log_price, log_quantity FROM logs WHERE market_id = ?";
+
+		ps = DAOUtil.getPreparedStatement(conn, req, marketId);
+		rs = ps.executeQuery();
+		
+		while (rs.next())
+		    {
+			ret += "['" + rs.getString("sdate") + "',\t" + rs.getInt("log_quantity") + ",\t" + rs.getInt("log_price") + "],\n";
+		    }
+		if (!ret.equals(""))
+		    {
+			ret = ret.substring(0, ret.length()-1);
+		    }
+		else
+		    ret += "['No Data', 0, 0]";
+		ret += "\n]);";
+	    }
+	catch (SQLException e)
+	    {
+		ret += e.getMessage();
+		throw new DAOException(e);
+	    }
+	finally
+	    {
+		
+		DAOUtil.close(rs, ps, conn);
+		return ret;
+	    }
+    }
+
     
     public ArrayList<Sell> getBids(int market_id, boolean opposite)
     {

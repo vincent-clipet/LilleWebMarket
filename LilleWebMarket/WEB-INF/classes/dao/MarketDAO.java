@@ -34,5 +34,10 @@ public interface MarketDAO
      * Return an information message about the transaction.
      */
     String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite);
+
+    /** Return formated exchange data to use in
+     * graphical representation
+     */
+    String getLogData(int marketId);
 	
 }
