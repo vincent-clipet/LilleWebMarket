@@ -9,45 +9,76 @@
   <head>
     <title>LilleWebMarket - Accueil</title>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+      // Some raw data (not necessarily accurate)
+      var data = google.visualization.arrayToDataTable([
+      ['Date', 'Volume', 'Prix'],
+      ['2004/05',  165,      938],
+      ['2005/06',  135,      1120],
+      ['2006/07',  157,      1167],
+      ['2007/08',  139,      1110],
+      ['2008/09',  136,      691]
+      ]);
+      
+      var options = {
+      title : 'Evolution du marché',
+      vAxis: {title: "Actions"},
+      hAxis: {title: "Date"},
+      seriesType: "bars",
+      series: {1: {type: "line"}}
+      };
+      
+      var chart = new google.visualization.ComboChart(document.getElementById('graph'));
+      chart.draw(data, options);
+      }
+      google.setOnLoadCallback(drawVisualization);
+    </script>
   </head>
   <body>
 
-      <jsp:include page="header.jsp" />
+    <jsp:include page="header.jsp" />
 
-      <jsp:useBean id="marketBean" scope="request" class="beans.Market" />
-      <jsp:useBean id="sellBean" scope="request" class="beans.Sell" />
+    <jsp:useBean id="marketBean" scope="request" class="beans.Market" />
+    <jsp:useBean id="sellBean" scope="request" class="beans.Sell" />
 
-      <%!
-	 int marketId;
-	 boolean opposite;
-	 ArrayList<Sell> asks;
-	 ArrayList<Sell> bids;
-	 String message;
-	 %>
-      
+    <%!
+       int marketId;
+       boolean opposite;
+       ArrayList<Sell> asks;
+       ArrayList<Sell> bids;
+       String message;
+       %>
+    
+    <%
+       marketId = (Integer) (request.getAttribute("marketId"));
+       opposite = (Boolean) (request.getAttribute("opposite"));
+       asks = (ArrayList<Sell>) (request.getAttribute("asks"));
+       bids = (ArrayList<Sell>) (request.getAttribute("bids"));
+       message = (String) (request.getAttribute("message"));
+       %>
+
+    <div id='menu'>
+      <ul>
+        <li><a href='index'>Marchés</a></li>
+	<li><a href='market?id=<%= marketId %>&opposite=<%= !opposite %>'>Aller au marché opposé</a></li>
+      </ul>
+    </div>
+
+    <div id='marches' >      
+      <h1 class='titre' >Pronostic : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
       <%
-	 marketId = (Integer) (request.getAttribute("marketId"));
-	 opposite = (Boolean) (request.getAttribute("opposite"));
-	 asks = (ArrayList<Sell>) (request.getAttribute("asks"));
-	 bids = (ArrayList<Sell>) (request.getAttribute("bids"));
-	 message = (String) (request.getAttribute("message"));
+	 if (message != null) {
 	 %>
+      <p class='alert'><%= message %></p>
+      <% } %>
 
-      <div id='menu'>
-        <ul>
-          <li><a href='index'>Marchés</a></li>
-	  <li><a href='market?id=<%= marketId %>&opposite=<%= !opposite %>'>Aller au marché opposé</a></li>
-        </ul>
-      </div>
-
-      <div id='marches' >      
-	<h1 class='titre' >Pronostic : <% out.write( opposite ? marketBean.getOpposite_info() : marketBean.getInfo()); %></h1>
-	<%
-	   if (message != null) {
-	   %>
-	<p class='alert'><%= message %></p>
-	<% } %>
-	<div id="asks" >
+      <div id='left-col' >
+	<div class='div-tab' id="asks" >
 	  <h1 class="asks">Vendeurs</h1>
 	  <table>
 
@@ -69,7 +100,7 @@
 	  </table>
 	</div><!-- end div #bids -->
 
-	<div id="bids" >
+	<div class='div-tab' id="bids" >
 	  <h1 class="bids">Acheteurs</h1>
 	  <table>
 	    
@@ -89,9 +120,8 @@
 	    <%}%>
 	    
 	  </table>
-
 	</div><!-- end div #bids -->
-
+	
 	<div id='buy-form' >
 	  <form method="get" action='buy'>
 	    <input type="text" name="id" value='<%= marketId %>' hidden/>
@@ -99,12 +129,19 @@
 
 	    <input type="text" name="quantity" placeholder="quantity"/>
 	    <input type="text" name="price" placeholder="price"/>
-	    <input type="submit" value="Faire une offre"/>
+	    <input class="bouton" type="submit" value="Faire une offre"/>
 	  </form>
-	</div>
+	</div><!-- end div #buy-form -->
 
-      </div><!-- end div #marches -->
-    </div><!-- end div #page -->
-   <jsp:include page="footer.jsp" />
-  </body>
+      </div><!-- end div #left-col -->
+
+      <div id='right-col'>
+	<div id='graph' style="width: 100%; height: 300px;">
+	</div>
+      </div>
+
+    </div><!-- end div #marches -->
+</div><!-- end div #page -->
+<jsp:include page="footer.jsp" />
+</body>
 </html>

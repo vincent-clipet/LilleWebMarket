@@ -14,7 +14,7 @@ body
     margin-left: auto;
     margin-right: auto;
     width: 80%;
-    background-color: #eee
+    background-color: #f2f2f2
 
 }
 
@@ -47,15 +47,15 @@ body
 #marches
 {
     background: #eee;
-    margin: 5px;
-    padding: 10px;
+    padding: 0px;
 }
 
 .titre
 {
     background: #ccc;
-    color: #404040;
+    color: #808080;
     clear: both;
+    padding: 0.2em;
 }
 
 #marches ul li
@@ -86,16 +86,6 @@ body
     color: #d50;
 }
 
-.titre-marche
-{
-    background: #ccc;
-    color: #404040;
-
-    clear: both;
-    margin: 5px;
-    padding: 10px;
-}
-
 .pronostic a
 {
     color: #101010;
@@ -113,48 +103,56 @@ body
 
 .alert
 {
-    color: red;
+    width: 100%;
+    margin: 10px;
+    padding: 0.2em;
+    background-color: #fab7a4;
+    color: #c44d58;
+    border: solid 2px #b0454f;
+    text-align: center;
+    font: 200 1.2em sans;    
 }
 
 /* market.jsp */
 
-#asks
+.div-tab
 {
-    background: #fbb;
     border-radius: 5px;
-    border: solid 1px #f44;
     margin: 10px;
-
 }
 
-h1.asks
+.div-tab h1
 {
-    background: #f88;
-    border-radius: 5px;
-    border: solid 3px #f44;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0.2em;
+}
+
+#asks
+{
+    background: #ff6b6b;
+}
+
+#asks h1
+{
+    background: #e56060;
 }
 
 #bids
 {
-    background: #bfb;
-    border-radius: 5px;
-    border: solid 1px #4f4;
-    margin: 10px;
+    background: #c7f464;
 }
 
-h1.bids
+#bids h1
 {
-    background: #8f8;    
-    border-radius: 5px;
-    border: solid 3px #4f4;
-    margin-top: 0px;
+    background: #b3db5a;    
 }
 
-#buy-form
+form
 {
-    padding: 5px;
-    border: solid 1px  black;
+    margin: 5px auto 5px 5px;
 }
 
 .market-maker
@@ -166,6 +164,56 @@ h1.bids
 
 table
 {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0px auto 0px;
     text-align: center;
-    font: 100 1em sans;
+    font: 100 1.2em sans;
+}
+
+#asks td, #asks th
+{
+    border: solid 2px #e56060;
+}
+
+#bids td, #bids th
+{
+    border: solid 2px #b3db5a;
+}
+
+#buy-form
+{
+    margin: 10px;
+    border: solid 1px  black;
+    border-radius: 5px;
+}
+
+.bouton
+{
+    float: right;
+    margin-right: 5px;
+    height: 2em;
+    background: #c7f464;
+    text-align: center;
+    border: 0;
+    border-radius: 3px;
+}
+
+#graph
+{
+    margin: 10px;
+    color: white;
+    background-color: #556270;
+}
+
+#left-col
+{
+    width: 50%;
+    float: left;
+}
+
+#right-col
+{
+    width: 50%;
+    float: left;
 }
