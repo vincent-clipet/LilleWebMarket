@@ -1,5 +1,6 @@
 package servlet;
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,8 @@ public class Profile extends CustomHttpServlet
 	{
 		super.initInstance(req, res);
 		super.storeUser();
-		
+
 		super.sendToJsp("profile.jsp");
 	}
+	
 }

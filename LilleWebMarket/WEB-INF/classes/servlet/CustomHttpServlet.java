@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import beans.User;
 import dao.DAOFactory;
-import dao.UserDAO;
 import dao.MarketDAO;
 import dao.StockDAO;
+import dao.UserDAO;
 
 public class CustomHttpServlet extends HttpServlet
 { 
@@ -23,12 +24,12 @@ public class CustomHttpServlet extends HttpServlet
 	protected HttpServletResponse res;
 	protected PrintWriter out;
 	protected HttpSession session;
-	
+
 	protected UserDAO userDao;
 	protected MarketDAO marketDao;
 	protected StockDAO stockDao;
-	
-	
+
+
 
 	//
 	// METHODS
@@ -40,35 +41,43 @@ public class CustomHttpServlet extends HttpServlet
 		this.out = res.getWriter();
 		this.session = req.getSession(true);
 		res.setContentType("text/html");
-		
+
 		DAOFactory factory = ((DAOFactory) (getServletContext().getAttribute("dao_factory")));
-		
+
 		if (userDao == null)
 			userDao = factory.getUserDAO();
-			
+
 		if (marketDao == null)
 			marketDao = factory.getMarketDAO();
-			
+
 		if (stockDao == null)
 			stockDao = factory.getStockDAO();
 	}
-	
+
 	protected void storeUser()
 	{
-		
+
 		User u = (User) ((req.getSession(true)).getAttribute("userBean"));
-		
+
 		if (u == null)
 		{
 			u = new User();
-			userDao.getUser(req.getUserPrincipal().getName(), u);
+
+			if (req.getUserPrincipal() != null)
+			{
+				userDao.getUser(req.getUserPrincipal().getName(), u);
+				session.setAttribute("userVisibility", "visible");
+			}
+			else
+				session.setAttribute("userVisibility", "hidden");
+
 			session.setAttribute("userBean", u);
 		}
 	}
-	
+
 	protected void sendToJsp(String jsp) throws ServletException, IOException
 	{
 		req.getRequestDispatcher(jsp).forward(req, res);
 	}
-	
+
 }
