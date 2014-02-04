@@ -18,7 +18,7 @@ public interface MarketDAO
 
 	/** Creates a new market in database
 	 * @return the created market */
-	Market createMarket(String info, String opposite_info, String end_date, int creator_id, Market m) throws DAOException;
+	Market createMarket(String info, String opposite_info, int hours, int creator_id, Market m) throws DAOException;
 
 	/** Returns an arraylist of asks
 	 * for this market (side according to the boolean)

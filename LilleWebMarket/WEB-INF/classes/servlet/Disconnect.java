@@ -29,6 +29,6 @@ public class Disconnect extends CustomHttpServlet
 
 		session.invalidate();
 
-		super.sendToJsp("index");
+		super.forward("index");
 	}
 }

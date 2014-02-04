@@ -53,7 +53,7 @@ public class BuyServlet extends CustomHttpServlet
 			req.setAttribute("message", message);   
 		}
 
-		super.sendToJsp("market");
+		super.forward("market");
 
 	}
 }

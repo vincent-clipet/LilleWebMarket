@@ -24,6 +24,6 @@ public class Index extends CustomHttpServlet
 		ArrayList<Market> markets = marketDao.getNextMarkets(-1);
 		req.setAttribute("markets", markets);
 
-		super.sendToJsp("index.jsp");
+		super.forward("index.jsp");
 	}
 }

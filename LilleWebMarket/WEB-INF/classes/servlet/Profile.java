@@ -18,7 +18,7 @@ public class Profile extends CustomHttpServlet
 		super.initInstance(req, res);
 		super.storeUser();
 
-		super.sendToJsp("profile.jsp");
+		super.forward("profile.jsp");
 	}
 
 }

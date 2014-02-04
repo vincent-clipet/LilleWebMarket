@@ -89,33 +89,44 @@ public class MarketDAOImpl implements MarketDAO
 		}
 
 		return m;
-
 	}
 
 
 	/** Creates a new market in database
 	 * @return the created market */
-	public Market createMarket(String info, String opposite_info, String end_date, int creator_id, Market m) throws DAOException
+	public Market createMarket(String info, String opposite_info, int hours, int creator_id, Market m) throws DAOException
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
 		ResultSet rs = null;
+		ResultSet rsK = null;
 
 		try
 		{
 			conn = this.factory.getConnection();
 
-			String req =  "INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES(?,?,?,?);";
-			ps = DAOUtil.getPreparedStatement(conn, req, info, opposite_info, end_date, creator_id);
+			String req = "INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES(?, ?, current_timestamp + interval '? hours', ?);";
+			ps = conn.prepareStatement(req, PreparedStatement.RETURN_GENERATED_KEYS);
+
+			ps.setString(1, info);
+			ps.setString(2, opposite_info);
+			ps.setObject(3, hours);
+
 			ps.executeUpdate();
-			DAOUtil.close(ps);
+			rsK = ps.getGeneratedKeys();
 
-			req = "SELECT * FROM markets WHERE info=? AND opposite_info=? AND end_date=? AND creator_id=?;";
-			ps = DAOUtil.getPreparedStatement(conn, req, info, opposite_info, end_date, creator_id);
-			rs = ps.executeQuery();
+			if (rsK.next())
+			{
+				long key = rsK.getLong(1);
 
-			if (rs.next())
-				m = map(rs, null);
+				req = "SELECT * FROM markets WHERE market_id=?;";
+				ps2 = DAOUtil.getPreparedStatement(conn, req, (int) key);
+				rs = ps2.executeQuery();
+
+				if (rs.next())
+					m = map(rs, m);
+			}
 		}
 		catch (SQLException e)
 		{
@@ -123,7 +134,9 @@ public class MarketDAOImpl implements MarketDAO
 		}
 		finally
 		{
-			DAOUtil.close(rs, ps, conn);
+			DAOUtil.close(rsK, ps, conn);
+			DAOUtil.close(rs);
+			DAOUtil.close(ps2);
 		}
 
 		return m;
@@ -164,7 +177,6 @@ public class MarketDAOImpl implements MarketDAO
 		}
 
 		return ret;
-
 	}
 
 	public String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite)
@@ -196,7 +208,7 @@ public class MarketDAOImpl implements MarketDAO
 			rs = ps.executeQuery();
 
 			// DEBUG
-			int biderMoney = 5000;
+			int biderMoney = 5000; //TODO : remove
 			int askerMoney = 5000;
 			String req2 = null;
 
@@ -351,7 +363,7 @@ public class MarketDAOImpl implements MarketDAO
 			DAOUtil.close(ps2);
 			DAOUtil.close(rs, ps, conn);
 		}
-		
+
 		return log;
 	}
 

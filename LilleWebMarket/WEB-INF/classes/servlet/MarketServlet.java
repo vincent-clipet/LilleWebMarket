@@ -54,7 +54,7 @@ public class MarketServlet extends CustomHttpServlet
 
 		out.println("###### MARKET_ID ##########" + req.getAttribute("marketId"));
 
-		super.sendToJsp("market.jsp");
+		super.forward("market.jsp");
 	}
 
 }

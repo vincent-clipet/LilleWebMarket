@@ -54,7 +54,7 @@ public class CustomHttpServlet extends HttpServlet
 			stockDao = factory.getStockDAO();
 	}
 
-	protected void storeUser()
+	protected User storeUser()
 	{
 		User u = (User) ((req.getSession(true)).getAttribute("userBean"));
 
@@ -71,9 +71,11 @@ public class CustomHttpServlet extends HttpServlet
 				req.setAttribute("userVisibility", "hidden");
 				//session.setAttribute("userBean", null);
 		}
+		
+		return u;
 	}
 
-	protected void sendToJsp(String jsp) throws ServletException, IOException
+	protected void forward(String jsp) throws ServletException, IOException
 	{
 		req.getRequestDispatcher(jsp).forward(req, res);
 	}
