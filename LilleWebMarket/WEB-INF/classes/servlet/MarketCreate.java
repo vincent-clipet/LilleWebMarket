@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/market_create")
 public class MarketCreate extends CustomHttpServlet
 {
-	
+
 	//
 	// METHODS
 	//
@@ -21,5 +21,5 @@ public class MarketCreate extends CustomHttpServlet
 
 		super.sendToJsp("profile.jsp");
 	}
-	
+
 }

@@ -20,5 +20,5 @@ public class Profile extends CustomHttpServlet
 
 		super.sendToJsp("profile.jsp");
 	}
-	
+
 }

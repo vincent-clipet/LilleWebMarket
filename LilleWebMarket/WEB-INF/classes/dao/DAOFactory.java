@@ -1,11 +1,7 @@
 package dao;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -36,7 +32,7 @@ public class DAOFactory
 	//
 	// METHODS
 	//
-	public static DAOFactory getInstance() throws DAOConfigException
+	public static DAOFactory getInstance() throws DAOException
 	{;
 		String db_driver = "org.postgresql.Driver"; //TODO: config
 		DataSource pool = null;
@@ -47,7 +43,7 @@ public class DAOFactory
 		}
 		catch ( ClassNotFoundException e )
 		{
-			throw new DAOConfigException("Can't load driver " + db_driver + ".");
+			throw new DAOException("Can't load driver " + db_driver + ".");
 		}
 
 		try
@@ -60,7 +56,7 @@ public class DAOFactory
 		catch (NamingException e)
 		{
 			e.printStackTrace();
-			throw new DAOConfigException("Error while configuring connection pool.");
+			throw new DAOException("Error while configuring connection pool.");
 		}
 
 		DAOFactory instance = new DAOFactory(pool);

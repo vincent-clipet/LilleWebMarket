@@ -9,26 +9,23 @@
 
 	<jsp:useBean id="userBean" scope="session" class="beans.User" />
 
-  <head>
-    <title>LilleWebMarket - Profil</title>
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
-  </head>
-  
-  <body>
-  	<jsp:include page="header.jsp" />
+	<head>
+		<title>LilleWebMarket - Profil</title>
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
+	</head>
 
-      <div id='profil'>
-		<h1 class='titre'>Profil</h1>
-		
-		<p>
-			ID : <jsp:getProperty name="userBean" property="id" /><br />
-			Login : <jsp:getProperty name="userBean" property="login" /><br />
-			Money : <jsp:getProperty name="userBean" property="money" /><br />
-		</p>
-		
-      </div>
-
-    </div>
-    <jsp:include page="footer.jsp" />
-  </body>
+	<body>
+		<jsp:include page="header.jsp" />
+	
+		<div id='profil'>
+			<h1 class='titre'>Profil</h1>
+			<p>
+				ID : <jsp:getProperty name="userBean" property="id" /><br />
+				Login : <jsp:getProperty name="userBean" property="login" /><br />
+				Money : <jsp:getProperty name="userBean" property="money" /><br />
+			</p>
+		</div>
+	
+		<jsp:include page="footer.jsp" />
+	</body>
 </html>

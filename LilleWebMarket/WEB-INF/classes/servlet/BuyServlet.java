@@ -1,16 +1,13 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.RequestDispatcher;
 
 import beans.Market;
-import beans.Sell;
 
 
 @WebServlet("/buy")
@@ -24,8 +21,6 @@ public class BuyServlet extends CustomHttpServlet
 	{
 		super.initInstance(req, res);
 		super.storeUser();
-
-		RequestDispatcher dispatcher;
 
 		beans.Market m = (Market) (req.getAttribute("marketBean"));
 		boolean opposite = false;
@@ -45,10 +40,6 @@ public class BuyServlet extends CustomHttpServlet
 		try{price = Integer.parseInt(req.getParameter("price"));}
 		catch (Exception e) {}
 
-		if (m == null)
-		{
-			m = new Market();
-		}
 		marketDao.getMarket(marketId, m);
 
 		if (quantity == 0 || (price <= 0 || price >= 100))
@@ -60,8 +51,7 @@ public class BuyServlet extends CustomHttpServlet
 			req.setAttribute("message", message);   
 		}
 
-		dispatcher = req.getRequestDispatcher("market");
-		dispatcher.forward(req, res);
+		super.sendToJsp("market");
 
 	}
 }

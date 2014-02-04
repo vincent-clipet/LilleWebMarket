@@ -8,10 +8,10 @@
 
 <html>
 
-  <head>
-    <title>LilleWebMarket - Accueil</title>
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
-  </head>
+	<head>
+    	<title>LilleWebMarket - Accueil</title>
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen, projection" />
+	</head>
   
 	<body>
 		<jsp:include page="header.jsp" />
@@ -29,11 +29,11 @@
 					<p>
 					<strong>Marché</strong>
 					<ul>
-						<li class='pronostic'><a href='market?id=<%= m.getMarket_id() %>&opposite=false'><%= m.getInfo() %></a></li>
-						<li class='pronostic'><a href='market?id=<%= m.getMarket_id() %>&opposite=true'><%= m.getOpposite_info() %></a></li>
+						<li class='pronostic'><a href='market?id=<%= m.getMarketId() %>&opposite=false'><%= m.getInfo() %></a></li>
+						<li class='pronostic'><a href='market?id=<%= m.getMarketId() %>&opposite=true'><%= m.getOppositeInfo() %></a></li>
 					</ul><br />
 					<strong>Date fin:</strong><br />
-					<%= m.getEnd_date() %><br />
+					<%= m.getEndDate() %><br />
 					</p>
 				</li>
 				<%
@@ -42,6 +42,8 @@
 				
 			</ul>
 		</div>
+		
 		<jsp:include page="footer.jsp" />
 	</body>
+	
 </html>

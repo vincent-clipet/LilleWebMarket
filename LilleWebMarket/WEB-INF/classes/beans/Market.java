@@ -4,97 +4,95 @@ package beans;
 public class Market
 {
 
-    //
-    // --- Attributes ----------------------------
-    //
-    private int market_id;
-    private String info;
-    private String opposite_info;
-    private String end_date; // TODO: Voir l'utilisation des types Date de java
-    private boolean winner;
-    private int creator_id;
-	
-    //
-    // --- Constructors ----------------------------
-    //
-	
-    public Market()
-    {
-	
-    }
-	
-    public Market(int market_id, String info, String opposite_info, String end_date, boolean winner, int creator_id)
-    {
-	this.market_id = market_id;
-	this.info = info;
-	this.opposite_info = opposite_info;
-	this.end_date = end_date;
-	this.winner = winner;
-	this.creator_id = creator_id;
-    }
-	
-    //
-    // --- Get & Set ----------------------------
-    //
-    
-    public void setMarket_id(int market_id)
-    {
-	this.market_id = market_id;
-    }
+	//
+	// --- Attributes ----------------------------
+	//
+	private int marketId;
+	private String info;
+	private String oppositeInfo;
+	private String endDate;
+	private boolean winner;
+	private int creatorId;
 
-    public int getMarket_id ()
-    {
-	return market_id;
-    }
+	//
+	// --- Constructors ----------------------------
+	//
 
+	public Market()
+	{
 
-    public void setInfo(String info)
-    {
-	this.info = info;
-    }
+	}
 
-    public String getInfo ()
-    {
-	return info;
-    }
+	public Market(int market_id, String info, String opposite_info, String end_date, boolean winner, int creator_id)
+	{
+		this.marketId = market_id;
+		this.info = info;
+		this.oppositeInfo = opposite_info;
+		this.endDate = end_date;
+		this.winner = winner;
+		this.creatorId = creator_id;
+	}
 
-    public void setOpposite_info(String opposite_info)
-    {
-	this.opposite_info = opposite_info;
-    }
+	//
+	// --- Get & Set ----------------------------
+	//
+	public void setMarketId(int marketId)
+	{
+		this.marketId = marketId;
+	}
 
-    public String getOpposite_info ()
-    {
-	return opposite_info;
-    }
+	public int getMarketId()
+	{
+		return marketId;
+	}
 
-    public void setEnd_date(String end_date)
-    {
-	this.end_date = end_date;
-    }
+	public void setInfo(String info)
+	{
+		this.info = info;
+	}
 
-    public String getEnd_date ()
-    {
-	return end_date;
-    }
+	public String getInfo()
+	{
+		return info;
+	}
 
-    public void setWinner(boolean winner)
-    {
-	this.winner = winner;
-    }
+	public void setOppositeInfo(String oppositeInfo)
+	{
+		this.oppositeInfo = oppositeInfo;
+	}
 
-    public boolean getWinner ()
-    {
-	return winner;
-    }
+	public String getOppositeInfo()
+	{
+		return oppositeInfo;
+	}
 
-    public void setCreator_id(int creator_id)
-    {
-	this.creator_id = creator_id;
-    }
+	public void setEndDate(String endDate)
+	{
+		this.endDate = endDate;
+	}
 
-    public int getCreator_id ()
-    {
-	return creator_id;
-    }
+	public String getEndDate()
+	{
+		return endDate;
+	}
+
+	public void setWinner(boolean winner)
+	{
+		this.winner = winner;
+	}
+
+	public boolean getWinner()
+	{
+		return winner;
+	}
+
+	public void setCreatorId(int creatorId)
+	{
+		this.creatorId = creatorId;
+	}
+
+	public int getCreatorId()
+	{
+		return creatorId;
+	}
 }

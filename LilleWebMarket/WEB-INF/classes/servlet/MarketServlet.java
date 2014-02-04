@@ -38,7 +38,7 @@ public class MarketServlet extends CustomHttpServlet
 
 		if (m == null)
 			m = new Market();
-		
+
 		marketDao.getMarket(marketId, m);
 
 		ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
@@ -56,5 +56,5 @@ public class MarketServlet extends CustomHttpServlet
 
 		super.sendToJsp("market.jsp");
 	}
-	
+
 }

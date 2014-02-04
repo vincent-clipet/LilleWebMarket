@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title>Page de login</title>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel=stylesheet href=style.css type=text/css>		
-  </head>
+	<head>
+		<title>Page de login</title>
+		<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel=stylesheet href=style.css type=text/css>		
+	</head>
   
 	<body>
 		<jsp:include page="header.jsp" />
