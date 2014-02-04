@@ -350,8 +350,9 @@ public class MarketDAOImpl implements MarketDAO
 			DAOUtil.close(rsK);
 			DAOUtil.close(ps2);
 			DAOUtil.close(rs, ps, conn);
-			return log;
 		}
+		
+		return log;
 	}
 
 	public String getLogData(int marketId)

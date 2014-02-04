@@ -56,22 +56,20 @@ public class CustomHttpServlet extends HttpServlet
 
 	protected void storeUser()
 	{
-
 		User u = (User) ((req.getSession(true)).getAttribute("userBean"));
 
 		if (u == null)
 		{
-			u = new User();
-
 			if (req.getUserPrincipal() != null)
 			{
+				u = new User();
 				userDao.getUser(req.getUserPrincipal().getName(), u);
-				session.setAttribute("userVisibility", "visible");
+				req.setAttribute("userVisibility", "visible");
+				session.setAttribute("userBean", u);
 			}
 			else
-				session.setAttribute("userVisibility", "hidden");
-
-			session.setAttribute("userBean", u);
+				req.setAttribute("userVisibility", "hidden");
+				//session.setAttribute("userBean", null);
 		}
 	}
 
