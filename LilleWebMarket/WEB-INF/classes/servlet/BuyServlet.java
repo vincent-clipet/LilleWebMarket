@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
 
 import beans.Market;
 import beans.Sell;
@@ -23,6 +24,8 @@ public class BuyServlet extends CustomHttpServlet
 	{
 		super.initInstance(req, res);
 		super.storeUser();
+
+		RequestDispatcher dispatcher;
 
 		beans.Market m = (Market) (req.getAttribute("marketBean"));
 		boolean opposite = false;
