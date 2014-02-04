@@ -29,11 +29,17 @@
 //      ]);
       
       var options = {
-      title : 'Evolution du marché',
-      vAxis: {title: "Actions"},
-      hAxis: {title: "Date"},
-      seriesType: "bars",
-      series: {1: {type: "line"}}
+        title : 'Evolution du marché',
+        vAxes: {
+          0: {title: "Volume", titleTextStyle:{color: "#556270", fontSize: 18, bold: true, italic: false}},
+          1:{title: "Prix", titleTextStyle:{color: "#4ecdc4", fontSize: 18, bold: true, italic: false}}
+        },
+        hAxis: {title: "Date"},
+        seriesType: "bars",
+        series: {
+          0: {targetAxisIndex: 0, color: "#556270"},
+          1: {targetAxisIndex: 1,type: "line", color: "#4ecdc4"}
+        }
       };
       
       var chart = new google.visualization.ComboChart(document.getElementById('graph'));
