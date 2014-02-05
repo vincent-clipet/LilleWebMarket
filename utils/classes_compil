@@ -1,9 +1,11 @@
 #!/bin/bash
 
 echo "Beans compilation..."
+rm -f ../LilleWebMarket/WEB-INF/classes/dao/*.class
 javac -cp $CLASSPATH:../LilleWebMarket/WEB-INF/classes/ ../LilleWebMarket/WEB-INF/classes/dao/*.java
 echo "done."
 
 echo "Servlets compilation..."
+rm -f ../LilleWebMarket/WEB-INF/classes/servlet/*.class
 javac -cp $CLASSPATH:../LilleWebMarket/WEB-INF/classes/ ../LilleWebMarket/WEB-INF/classes/servlet/*.java
 echo "done."
