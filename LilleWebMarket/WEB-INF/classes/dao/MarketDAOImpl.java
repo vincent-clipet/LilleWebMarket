@@ -8,6 +8,7 @@ import java.util.ArrayList;
 //import org.postgresql.util.PGInterval;
 
 import beans.Market;
+import beans.User;
 import beans.Sell;
 
 
@@ -179,7 +180,7 @@ public class MarketDAOImpl implements MarketDAO
 		return ret;
 	}
 
-	public String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite)
+    public String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite, User u)
 	{
 		opposite = !opposite;
 		Connection conn = null;
@@ -265,6 +266,10 @@ public class MarketDAOImpl implements MarketDAO
 					req2 = "UPDATE users SET money = money - ? WHERE user_id = ?;";
 					ps2 = DAOUtil.getPreparedStatement(conn, req2, totalExchange, userId);
 					ps2.executeUpdate();
+					
+					if (u.getId() != ownerId)
+					    u.setMoney(u.getMoney() - totalExchange);
+
 					log += "1.4<br>"; // DEBUG
 
 					// "INSERT INTO logs VALUES (default, TIMESTAMP 'now', :sellPrice, :exchangeQuantity, :marketId)";
@@ -305,6 +310,10 @@ public class MarketDAOImpl implements MarketDAO
 					req2 = "UPDATE users SET money = money - ? WHERE user_id = ?;";
 					ps2 = DAOUtil.getPreparedStatement(conn, req2, totalExchange, userId);
 					ps2.executeUpdate();
+
+					if (u.getId() != ownerId)
+					    u.setMoney(u.getMoney() - totalExchange);
+
 					log += "2.4<br>"; // DEBUG
 
 					// "INSERT INTO logs VALUES (default, TIMESTAMP 'now', :sellPrice, :exchangeQuantity, :marketId) ;";

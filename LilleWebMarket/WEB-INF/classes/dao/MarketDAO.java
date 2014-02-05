@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 
 import beans.Market;
+import beans.User;
 import beans.Sell;
 
 public interface MarketDAO
@@ -33,7 +34,7 @@ public interface MarketDAO
 	/** Try to put a bid with specified parameters
 	 * Return an information message about the transaction.
 	 */
-	String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite);
+    String putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite, User u);
 
 	/** Return formated exchange data to use in
 	 * graphical representation
