@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import beans.User;
 import dao.DAOFactory;
 import dao.MarketDAO;
@@ -79,5 +81,10 @@ public class CustomHttpServlet extends HttpServlet
 	{
 		req.getRequestDispatcher(jsp).forward(req, res);
 	}
-
+	
+	protected String escapeChars(String input)
+	{
+		return StringEscapeUtils.escapeHtml4(input);
+	}
+	
 }

@@ -26,13 +26,13 @@ public class MarketCreate extends CustomHttpServlet
 		String info = null;
 		String oppositeInfo = null;
 
-		try {hours = Integer.parseInt(req.getParameter("hours")); }
+		try {hours = Integer.parseInt(escapeChars(req.getParameter("hours"))); }
 		catch (Exception e) {}
 
-		try {info = req.getParameter("info");}
+		try {info = escapeChars(req.getParameter("info"));}
 		catch (Exception e) {}
 
-		try{oppositeInfo = req.getParameter("opposite_info");}
+		try{oppositeInfo = escapeChars(req.getParameter("opposite_info"));}
 		catch (Exception e) {}
 
 		if (hours == -1 && info == null && oppositeInfo == null)

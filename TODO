@@ -4,3 +4,4 @@
 * Afficher message erreur quand login fail
 * Design profil
 * Régler problème date Postgresql
+* Cloture des marchés par un MarketMaker
