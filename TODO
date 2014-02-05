@@ -1,7 +1,11 @@
 * Encrypter mots de passe
 * Echapper les caractères des formulaires
-* Factoriser code HTML dans 'include'
+* Factoriser profil dans un 'include' + Design profil
 * Afficher message erreur quand login fail
-* Design profil
 * Régler problème date Postgresql
-* Cloture des marchés par un MarketMaker
+* Cloture des marchés par un MarketMaker + distribution des gains
+* Supprimer nanosecondes des dates dans PostgreSQL
+* Modifier argent des utilisateurs
+* Protéger JSP des accès extérieurs
+* Supprimer logs dans les servlets
+* Modifier la config pour les nouvelles servlets
