@@ -26,7 +26,8 @@ public class MarketServlet extends CustomHttpServlet
 		super.initInstance(req, res);
 		super.storeUser();
 
-		beans.Market m = (Market) (req.getAttribute("marketBean"));
+		Market m = (Market) (req.getAttribute("marketBean"));
+		
 		boolean opposite = false;
 		int marketId = 0;
 

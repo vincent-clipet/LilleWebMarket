@@ -57,11 +57,9 @@ public class MarketCreate extends CustomHttpServlet
 		}
 		else
 		{
-			req.setAttribute("message", 5);
+			req.setAttribute("message", "5");
 			Market market = super.marketDao.createMarket(info, oppositeInfo, hours, u.getId(), null);
-			req.setAttribute("id", market.getMarketId());
-			req.setAttribute("opposite", false);
-			super.forward("market");
+			super.forward("market?id=" + market.getMarketId() + "&opposite=false");
 		}
 	}
 
