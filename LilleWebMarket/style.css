@@ -14,8 +14,6 @@ body
     margin-left: auto;
     margin-right: auto;
     width: 80%;
-    background-color: #f2f2f2
-
 }
 
 #header
@@ -25,14 +23,15 @@ body
     width: 80%;
     background: white;
 /*    border: solid 1px black;*/
-    box-shadow: 0px 0px 5px 1px grey; 
+/*    box-shadow: 0px 0px 5px 1px grey; */
 }
 
 #header img
 {
     position: relative;
     left: 0%;
-    top: 0%;
+    top: auto;
+    bottom: auto;
 }
 
 #header #main-title
@@ -40,8 +39,46 @@ body
     display:inline;
     font: 500 4em museo,serif;
     color: black;
-    text-align: center;
+/*    text-align: center;*/
     margin-left: 10%;
+}
+
+#profile
+{
+    color: white;
+    background-color: #003362;
+    margin: 10px 0px;
+    float: right;
+    width: auto;
+    border-bottom: solid 1px black;
+}
+
+#profile img
+{
+/*    border: solid 1px black;*/
+    margin: 10px;
+    float: left;
+    border-radius: 50%
+
+}
+
+#profile #infos
+{
+    padding: 5px;
+    margin: 5px;
+    float: left;
+/*    border: solid 1px black;*/
+}
+
+#disconnect-button
+{
+    float: right;
+    margin-right: 5px;
+    height: 2em;
+    background: #c7f464;
+    text-align: center;
+    border: 0;
+    border-radius: 3px;
 }
 
 #marches
@@ -53,7 +90,7 @@ body
 .titre
 {
     background: #ccc;
-    color: #808080;
+    color: #606060;
     clear: both;
     padding: 0.2em;
 }
