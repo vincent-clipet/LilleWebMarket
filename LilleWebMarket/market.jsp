@@ -71,17 +71,16 @@
        message = (String) (request.getAttribute("message"));
        %>
 
-    <div id='profil'>
-      <h1 class='titre'>Profil</h1>
-      <p>
-	ID : <jsp:getProperty name="userBean" property="id" /><br />
-	Login : <jsp:getProperty name="userBean" property="login" /><br />
-	Money : <jsp:getProperty name="userBean" property="money" /><br />
-	<form method='post' action='disconnect' ><input type="submit" value="Disconnect"/></form>
-      </p>
+
+    <div id='profile'>
+      <img src="photo.png"/>
+      <div id='infos'>
+	<p id='login'><jsp:getProperty name="userBean" property="login" /></p>
+	<p id='account'>Compte : <jsp:getProperty name="userBean" property="money" /></p>
+	<form method='post' action='disconnect' ><input id='disconnect-button' type="submit" value="Disconnect"/></form>
+      </div>
     </div>
     
-
     <div id='menu'>
       <ul>
         <li><a href='index'>Marchés</a></li>
