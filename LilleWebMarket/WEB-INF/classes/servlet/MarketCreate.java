@@ -22,31 +22,42 @@ public class MarketCreate extends CustomHttpServlet
 		super.initInstance(req, res);
 		User u = super.storeUser();
 
-		int hours = 0;
+		int hours = -1;
 		String info = null;
 		String oppositeInfo = null;
 
-		try {hours = (Integer) (req.getAttribute("hours")); }
+		try {hours = Integer.parseInt(req.getParameter("hours")); }
 		catch (Exception e) {}
 
-		try {info = (String) (req.getAttribute("info"));}
+		try {info = req.getParameter("info");}
 		catch (Exception e) {}
 
-		try{oppositeInfo = (String) (req.getAttribute("opposite_info"));}
+		try{oppositeInfo = req.getParameter("opposite_info");}
 		catch (Exception e) {}
 
-		if (hours <= 0)
+		if (hours == -1 && info == null && oppositeInfo == null)
+		{
+			req.setAttribute("message", "1 : " + hours + " " + info + " " + oppositeInfo);
+			super.forward("market_create.jsp");
+		}
+		else if (hours <= 0)
 		{
 			req.setAttribute("message", "La durée doit être supérieure à 0.");
-			super.forward("market_create");
+			super.forward("market_create.jsp");
 		}
-		else if (info == null || info.equals("") || oppositeInfo == null || oppositeInfo.equals(""))
+		else if (info == null || info.equals(""))
 		{
 			req.setAttribute("message", "Le nom du marché est invalide");
-			super.forward("market_create");
+			super.forward("market_create.jsp");
+		}
+		else if (oppositeInfo == null || oppositeInfo.equals(""))
+		{
+			req.setAttribute("message", "Le nom du marché opposé est invalide");
+			super.forward("market_create.jsp");
 		}
 		else
 		{
+			req.setAttribute("message", 5);
 			Market market = super.marketDao.createMarket(info, oppositeInfo, hours, u.getId(), null);
 			req.setAttribute("id", market.getMarketId());
 			req.setAttribute("opposite", false);

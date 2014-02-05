@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+//import org.postgresql.util.PGInterval;
 
 import beans.Market;
 import beans.Sell;
@@ -106,12 +107,12 @@ public class MarketDAOImpl implements MarketDAO
 		{
 			conn = this.factory.getConnection();
 
-			String req = "INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES(?, ?, current_timestamp + interval '? hours', ?);";
+			String req = "INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES(?, ?, current_timestamp + interval '24 hours', ?);";
 			ps = conn.prepareStatement(req, PreparedStatement.RETURN_GENERATED_KEYS);
 
 			ps.setString(1, info);
 			ps.setString(2, opposite_info);
-			ps.setObject(3, hours);
+			ps.setInt(3, creator_id);
 
 			ps.executeUpdate();
 			rsK = ps.getGeneratedKeys();
@@ -156,7 +157,6 @@ public class MarketDAOImpl implements MarketDAO
 
 			//		String req = "SELECT * FROM stocks WHERE winner IS NOT NULL ORDER BY end_date ASC LIMIT ?;";
 
-
 			String req = "SELECT login as ownername, quantity, (100-price_sell) as price";
 			req += " FROM sells sl, stocks st, users u";
 			req += " WHERE st.market_id = ? AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ? ORDER BY price DESC;";
@@ -190,7 +190,6 @@ public class MarketDAOImpl implements MarketDAO
 
 		String log = "";
 
-
 		try
 		{
 			conn = this.factory.getConnection();
@@ -218,8 +217,6 @@ public class MarketDAOImpl implements MarketDAO
 			// TODO : need to handle stocks fragmentation.
 			while (rs.next() && bidQuantity > 0)
 			{
-
-
 				int stockId = rs.getInt("stockid");
 				int availableQuantity = rs.getInt("quantity");
 				int ownerId = rs.getInt("owner_id");
@@ -348,8 +345,6 @@ public class MarketDAOImpl implements MarketDAO
 
 			}
 			log += "4<br>"; // DEBUG
-
-
 		}
 		catch (SQLException e)
 		{
@@ -358,7 +353,6 @@ public class MarketDAOImpl implements MarketDAO
 		}
 		finally
 		{
-
 			DAOUtil.close(rsK);
 			DAOUtil.close(ps2);
 			DAOUtil.close(rs, ps, conn);
@@ -384,15 +378,13 @@ public class MarketDAOImpl implements MarketDAO
 			rs = ps.executeQuery();
 
 			while (rs.next())
-			{
 				ret += "['" + rs.getString("sdate") + "',\t" + rs.getInt("log_quantity") + ",\t" + rs.getInt("log_price") + "],\n";
-			}
+				
 			if (!ret.equals(""))
-			{
 				ret = ret.substring(0, ret.length()-1);
-			}
 			else
 				ret += "['No Data', 0, 0]";
+				
 			ret += "\n]);";
 		}
 		catch (SQLException e)

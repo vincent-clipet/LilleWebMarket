@@ -1,3 +1,6 @@
 * Encrypter mots de passe
 * Echapper les caractères des formulaires
 * Factoriser code HTML dans 'include'
+* Afficher message erreur quand login fail
+* Design profil
+* Régler problème date Postgresql

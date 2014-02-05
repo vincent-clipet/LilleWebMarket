@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
+
 <html>
 
 	<head>
@@ -16,6 +19,10 @@
 		   String oppositeInfo = (String) (request.getAttribute("opposite_info"));
 		   Integer hours = (Integer) (request.getAttribute("hours"));
 		   String message = (String) (request.getAttribute("message"));
+		   
+		   info = (info == null ? "" : info);
+		   oppositeInfo = (oppositeInfo == null ? "" : oppositeInfo);
+		   hours = (hours == null ? 0 : hours);
 		 %>
 	   
 	   
@@ -40,7 +47,7 @@
 			<form method="get" action="market_create">
 				<p>Intitulé <input type='text' name='info' value='<%= info %>' size='50'/></p>
 				<p>Contre-proposition<input type='text' name='opposite_info' value='<%= oppositeInfo %>' size='50' /></p>
-				<p>Durée (en heures)<input type='text' name='hours' value='<%= hours %>' /></p>
+				<p>Durée (en heures)<input type='text' name='hours' value='<%= (int)hours %>' /></p>
 				<input type="submit" value="Créer un nouveau marché">
 			</form>
 		</div>
