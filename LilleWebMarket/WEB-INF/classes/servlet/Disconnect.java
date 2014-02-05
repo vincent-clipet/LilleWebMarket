@@ -26,9 +26,10 @@ public class Disconnect extends CustomHttpServlet
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		super.initInstance(req, res);
-
+		
+		session.removeAttribute("userBean");
 		session.invalidate();
 
-		super.forward("index");
+		res.sendRedirect("index");
 	}
 }
