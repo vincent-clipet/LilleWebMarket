@@ -5,6 +5,6 @@
 * Régler problème date Postgresql
 * Cloture des marchés par un MarketMaker + distribution des gains
 * Supprimer nanosecondes des dates dans PostgreSQL
-* Protéger JSP des accès extérieurs
-* Supprimer logs dans les servlets
-* Modifier la config pour les nouvelles servlets
+? Protéger JSP des accès extérieurs
+? Supprimer logs dans les servlets
+? Modifier la config pour les nouvelles servlets

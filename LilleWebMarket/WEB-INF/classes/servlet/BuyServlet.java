@@ -49,11 +49,11 @@ public class BuyServlet extends CustomHttpServlet
 		else
 		{
 		    int userId = u.getId(); // TODO
-		    String message = marketDao.putBid(quantity, price, userId, marketId, opposite);
-			req.setAttribute("message", message);   
+		    //String message = marketDao.putBid(quantity, price, userId, marketId, opposite);
+			marketDao.putBid(quantity, price, userId, marketId, opposite);
+			//req.setAttribute("message", message);   
 		}
 
 		super.forward("market");
-
 	}
 }
