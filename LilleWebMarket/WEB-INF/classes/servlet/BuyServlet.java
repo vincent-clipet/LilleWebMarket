@@ -48,10 +48,8 @@ public class BuyServlet extends CustomHttpServlet
 		    req.setAttribute("message", "La quantité doit être différente de 0 et le prix compris entre 0 et 99.");
 		else
 		{
-		    int userId = u.getId(); // TODO
-		    //String message = marketDao.putBid(quantity, price, userId, marketId, opposite);
-			marketDao.putBid(quantity, price, userId, marketId, opposite);
-			//req.setAttribute("message", message);   
+		    marketDao.putBid(quantity, price, marketId, opposite, u);
+		    //req.setAttribute("message", message);   
 		}
 
 		super.forward("market");

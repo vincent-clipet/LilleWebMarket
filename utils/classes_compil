@@ -1,6 +1,6 @@
 #!/bin/bash
 
-newClasspath=$CLASSPATH:../LilleWebMarket/WEB-INF/classes/:..LilleWebMarket/WEB-INF/libcommons-lang3-3.2.1.jar
+newClasspath=$CLASSPATH:../LilleWebMarket/WEB-INF/classes/:../LilleWebMarket/WEB-INF/lib/commons-lang3-3.2.1.jar
 
 echo "Beans compilation..."
 rm -f ../LilleWebMarket/WEB-INF/classes/dao/*.class

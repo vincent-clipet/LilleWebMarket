@@ -180,9 +180,10 @@ public class MarketDAOImpl implements MarketDAO
 		return ret;
 	}
 
-    public void putBid(int bidQuantity, int bidPrice, int userId, int marketId, boolean opposite, User u)
+    public void putBid(int bidQuantity, int bidPrice, int marketId, boolean opposite, User u)
 	{
 		opposite = !opposite;
+		int userId = u.getId();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;

@@ -1,129 +1,120 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
-    "http://java.sun.com/j2ee/dtds/web-app_2.2.dtd">
+PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+"http://java.sun.com/j2ee/dtds/web-app_2.2.dtd">
 
 <web-app>
 
-    <!-- Parametrages propres a cette application web -->
-    <context-param>
-        <description>Site Web de bourse d'informations</description>
-    </context-param>
-	
-	<listener>
-		<listener-class>dao.DAOFactoryInitializer</listener-class>
-	</listener>
+  <!-- Parametrages propres a cette application web -->
+  <context-param>
+    <param-name>Developpeurs</param-name>
+    <param-value>Martin PIFFAULT</param-value>
+    <param-value>Vincent CLIPET</param-value>
+    <description>Site Web de bourse d'informations</description>
+  </context-param>
+  <listener>
+    <listener-class>dao.DAOFactoryInitializer</listener-class>
+  </listener>
 
-    <!--       Recuperation des erreurs      -->
-    <!-- A commenter lors des mises au point -->
-    <error-page>
-        <error-code>403</error-code>
-        <location>/erreur.jsp?message=Impossible d'accéder à cette page</location>
-    </error-page>
+  <!--       Recuperation des erreurs      -->
+  <!-- A commenter lors des mises au point -->
+  <error-page>
+    <error-code>403</error-code>
+    <location>/erreur.jsp?message=Impossible d'accéder à cette page</location>
+  </error-page>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/erreur.jsp?message=Page inexistante</location>
-    </error-page>
-    
-    <error-page>
-        <error-code>500</error-code>
-        <location>/erreur.jsp?message=BDD ou Beans inaccessibles</location>
-    </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/erreur.jsp?message=Page inexistante</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>500</error-code>
+    <location>/erreur.jsp?message=BDD ou Beans inaccessibles</location>
+  </error-page>
 
-    <!-- Vie de la session en minutes -->
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
+  <!-- Vie de la session en minutes -->
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
 
-    <welcome-file-list>
-        <welcome-file>index</welcome-file>
-    </welcome-file-list>
-
-
-    <!--  Lien entre les pages et les roles -->
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Market</web-resource-name>
-			<url-pattern>/market</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-      	    <role-name>user</role-name>
-      	    <role-name>marketmaker</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Profile</web-resource-name>
-			<url-pattern>/profile</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>user</role-name>
-            <role-name>marketmaker</role-name>
-        </auth-constraint>
-    </security-constraint>
-    
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Create Market</web-resource-name>
-			<url-pattern>/market_create</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>marketmaker</role-name>
-        </auth-constraint>
-    </security-constraint>
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Disconnect</web-resource-name>
-			<url-pattern>/disconnect</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-      	    <role-name>user</role-name>
-      	    <role-name>marketmaker</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Buy</web-resource-name>
-			<url-pattern>/buy</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-      	    <role-name>user</role-name>
-      	    <role-name>marketmaker</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>No JSP for you</web-resource-name>
-			<url-pattern>/*.jsp</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-      	    <role-name>nobody_has_this_role</role-name>
-        </auth-constraint>
-    </security-constraint>
+  <welcome-file-list>
+    <welcome-file>index</welcome-file>
+  </welcome-file-list>
 
 
-    <!-- La maniere dont la page de login est affichee -->
-    <login-config> 
-      <auth-method>FORM</auth-method> 
-      <realm-name>Nom affiché sur le formulaire</realm-name>
-      <form-login-config>
-	<form-login-page>login.jsp</form-login-page>
-	<form-error-page>erreur.jsp?Mauvais utilisateur</form-error-page>
-      </form-login-config>
-    </login-config>
-    
-    <!-- La liste des differents roles -->
-    <security-role>
-        <role-name>user</role-name>
-    </security-role>
-    <security-role>
-        <role-name>marketmaker</role-name>
-    </security-role> 
+  <!--  Lien entre les pages et les roles -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Market</web-resource-name>
+      <url-pattern>/market</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+      <role-name>marketmaker</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Profile</web-resource-name>
+      <url-pattern>/profile</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+      <role-name>marketmaker</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Create Market</web-resource-name>
+      <url-pattern>/market_create</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>marketmaker</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Disconnect</web-resource-name>
+      <url-pattern>/disconnect</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+      <role-name>marketmaker</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Buy</web-resource-name>
+      <url-pattern>/buy</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+      <role-name>marketmaker</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <!-- La maniere dont la page de login est affichee -->
+  <login-config> 
+    <auth-method>FORM</auth-method> 
+    <realm-name>Nom affiché sur le formulaire</realm-name>
+    <form-login-config>
+      <form-login-page>login.jsp</form-login-page>
+      <form-error-page>erreur.jsp?Mauvais utilisateur</form-error-page>
+    </form-login-config>
+  </login-config>
+  
+  <!-- La liste des differents roles -->
+  <security-role>
+    <role-name>user</role-name>
+  </security-role>
+  <security-role>
+    <role-name>marketmaker</role-name>
+  </security-role> 
 
 </web-app>
