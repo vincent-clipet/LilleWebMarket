@@ -73,7 +73,7 @@
 
 
     <div id='profile'>
-      <img src="photo.png"/>
+      <img src="images/photo.png"/>
       <div id='infos'>
 	<p id='login'><jsp:getProperty name="userBean" property="login" /></p>
 	<p id='account'>Compte : <jsp:getProperty name="userBean" property="money" /></p>
