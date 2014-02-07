@@ -513,7 +513,6 @@ public class MarketDAOImpl implements MarketDAO
 		// SELECT SUM(quantity) AS req_sum,owner_id AS req_owner_id FROM stocks WHERE market_id=4 AND opposite='false' GROUP BY owner_id;
 		//String req2 = "DELETE FROM markets WHERE market_id=? ;"; // destroy market
 
-		System.out.println("DEBUG : closeMarket("+marketId+", "+winner+")");
 		Connection conn = null;
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;

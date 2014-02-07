@@ -4,13 +4,8 @@ X Factoriser profil dans un 'include' + Design profil
 * Afficher le portefeuille d'actions de l'utilisateur
 * Afficher message erreur quand login fail
 * Régler problème date Postgresql
-? Cloture des marchés par un MarketMaker + distribution des gains
 * Protéger JSP des accès extérieurs
-? Supprimer logs dans les servlets
-- Modifier la config pour les nouvelles servlets
 * Remplacer requêtes multiples pendant suppression d'un marché par 1 seule
 * check ordre par date des ordres dans un marché
-* Ajouter formulaire achat
 * possibilité de vendre des actions précedemment achetées
-* ajouter user_id à la requete 'mustBeClosed'
 * promotion en marketmaker

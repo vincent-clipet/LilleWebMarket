@@ -30,16 +30,16 @@ public class BuyServlet extends CustomHttpServlet
 		int quantity = 0;
 		int price = 0;
 
-		try {opposite = Boolean.parseBoolean(req.getParameter("opposite"));}
+		try {opposite = Boolean.parseBoolean(escapeChars(req.getParameter("opposite")));}
 		catch (Exception e) {}
 
-		try {marketId = Integer.parseInt(req.getParameter("id"));}
+		try {marketId = Integer.parseInt(escapeChars(req.getParameter("id")));}
 		catch (Exception e) {}
 
-		try{quantity = Integer.parseInt(req.getParameter("quantity"));}
+		try{quantity = Integer.parseInt(escapeChars(req.getParameter("quantity")));}
 		catch (Exception e) {}
 
-		try{price = Integer.parseInt(req.getParameter("price"));}
+		try{price = Integer.parseInt(escapeChars(req.getParameter("price")));}
 		catch (Exception e) {}
 
 		marketDao.getMarket(marketId, m);
