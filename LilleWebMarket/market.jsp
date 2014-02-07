@@ -20,13 +20,6 @@
       ['Date', 'Volume', 'Prix'],
 
       <%= (String) (request.getAttribute("logData")) %>
-
-//      ['2004/05',  165,      938],
-//      ['2005/06',  135,      1120],
-//      ['2006/07',  157,      1167],
-//      ['2007/08',  139,      1110],
-//      ['2008/09',  136,      691]
-//      ]);
       
       var options = {
         title : 'Evolution du marché',
@@ -49,7 +42,6 @@
     </script>
   </head>
   <body>
-    <jsp:useBean id="userBean" scope="session" class="beans.User" />
     <jsp:include page="header.jsp" />
 
     <jsp:useBean id="marketBean" scope="request" class="beans.Market" />
@@ -61,8 +53,8 @@
        ArrayList<Sell> asks;
        ArrayList<Sell> bids;
        String message;
-	   boolean hasEnded;
-	   boolean mustBeConfirmed;
+       boolean hasEnded;
+       boolean mustBeConfirmed;
        %>
     
     <%
