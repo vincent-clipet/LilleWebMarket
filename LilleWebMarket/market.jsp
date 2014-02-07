@@ -61,6 +61,8 @@
        ArrayList<Sell> asks;
        ArrayList<Sell> bids;
        String message;
+	   boolean hasEnded;
+	   boolean mustBeConfirmed;
        %>
     
     <%
@@ -69,6 +71,8 @@
        asks = (ArrayList<Sell>) (request.getAttribute("asks"));
        bids = (ArrayList<Sell>) (request.getAttribute("bids"));
        message = (String) (request.getAttribute("message"));
+	   hasEnded = (Boolean) (request.getAttribute("hasEnded"))
+	   mustBeConfirmed = (Boolean) (request.getAttribute("mustBeConfirmed"));
        %>
 
 
@@ -141,6 +145,10 @@
 	  </table>
 	</div><!-- end div #bids -->
 	
+	<%
+		if (! hasEnded)
+		{
+	%>
 	<div id='buy-form' >
 	  <form method="get" action='buy'>
 	    <input type="text" name="id" value='<%= marketId %>' hidden/>
@@ -151,13 +159,31 @@
 	    <input class="bouton" type="submit" value="Faire une offre"/>
 	  </form>
 	</div><!-- end div #buy-form -->
+	<%
+		}
+	%>
 
       </div><!-- end div #left-col -->
 
       <div id='right-col'>
-	<div id='graph' style="width: 100%; height: 300px;">
-	</div>
+		<div id='graph' style="width: 100%; height: 300px;">
+		</div>
       </div>
+	  
+	<%
+		if (mustBeConfirmed)
+		{
+	%>
+	  <div id='confirmation-form' >
+	  <form method="get" action='market'>
+		<input type="radio" name="winner" value="false" /><jsp:getProperty name="marketBean" property="info" />
+		<input type="radio" name="winner" value="true" /><jsp:getProperty name="marketBean" property="oppositeInfo" />
+	    <input class="bouton" type="submit" value="Confimer la fin de ce marché"/>
+	  </form>
+	</div><!-- end div #buy-form -->
+	<%
+		}
+	%>
 
     </div><!-- end div #marches -->
 </div><!-- end div #page -->

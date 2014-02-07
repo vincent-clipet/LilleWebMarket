@@ -27,9 +27,10 @@ public class MarketServlet extends CustomHttpServlet
 		super.storeUser();
 
 		Market m = (Market) (req.getAttribute("marketBean"));
-		
+
 		boolean opposite = false;
 		int marketId = 0;
+		Boolean winner = null;
 
 		try {opposite = Boolean.parseBoolean(req.getParameter("opposite"));}
 		catch (Exception e) {}
@@ -37,25 +38,41 @@ public class MarketServlet extends CustomHttpServlet
 		try {marketId = Integer.parseInt(req.getParameter("id"));}
 		catch (Exception e) {}
 
+		try {winner = Boolean.valueOf(req.getParameter("winner"));}
+		catch (Exception e) {}
+
 		if (m == null)
 			m = new Market();
 
 		marketDao.getMarket(marketId, m);
 
-		ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
-		ArrayList<Sell> bids = marketDao.getBids(marketId, opposite);
-		String logData = marketDao.getLogData(marketId);
+		if (winner != null)
+		{
+			marketDao.closeMarket(marketId, winner);
+			super.forward("index");
+		}
+		else
+		{
+			ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
+			ArrayList<Sell> bids = marketDao.getBids(marketId, opposite);
+			String logData = marketDao.getLogData(marketId);
+			boolean[] b = marketDao.hasEndedAndMustBeConfirmed(m.getMarketId());
 
-		req.setAttribute("logData", logData);
-		req.setAttribute("marketBean", m);
-		req.setAttribute("marketId", marketId);
-		req.setAttribute("opposite", opposite);
-		req.setAttribute("asks", asks);
-		req.setAttribute("bids", bids);
+			if (b[1] && ! req.isUserInRole("marketmaker"))
+				b[1] = false;
 
-		out.println("###### MARKET_ID ##########" + req.getAttribute("marketId"));
+			req.setAttribute("hasEnded", b[0]);
+			req.setAttribute("mustBeConfirmed", b[1]);
+			req.setAttribute("logData", logData);
+			req.setAttribute("marketBean", m);
+			req.setAttribute("marketId", marketId);
+			req.setAttribute("opposite", opposite);
+			req.setAttribute("asks", asks);
+			req.setAttribute("bids", bids);
 
-		super.forward("market.jsp");
+			//out.println("###### MARKET_ID ##########" + req.getAttribute("marketId"));
+			super.forward("market.jsp");
+		}
 	}
 
 }

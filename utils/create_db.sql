@@ -47,7 +47,7 @@ CREATE TABLE stocks
 	CONSTRAINT fk_stock_owner_id FOREIGN KEY (owner_id) REFERENCES users(user_id),
 	
 	market_id INTEGER NOT NULL,
-	CONSTRAINT fk_stock_market_id FOREIGN KEY (market_id) REFERENCES markets(market_id)
+	CONSTRAINT fk_stock_market_id FOREIGN KEY (market_id) REFERENCES markets(market_id) ON DELETE CASCADE
 );
 
 -- LOGS
@@ -61,7 +61,7 @@ CREATE TABLE logs
 	log_quantity INTEGER NOT NULL,
 	
 	market_id INTEGER NOT NULL,
-	CONSTRAINT fk_logs_market_id FOREIGN KEY (market_id) REFERENCES markets(market_id)
+	CONSTRAINT fk_logs_market_id FOREIGN KEY (market_id) REFERENCES markets(market_id) ON DELETE CASCADE
 );
 
 -- SELL
@@ -74,7 +74,7 @@ CREATE TABLE sells
 	price_sell INTEGER NOT NULL,
 	
 	stock_id INTEGER NOT NULL,
-	CONSTRAINT fk_sells_stock_id FOREIGN KEY (stock_id) REFERENCES stocks(stock_id)
+	CONSTRAINT fk_sells_stock_id FOREIGN KEY (stock_id) REFERENCES stocks(stock_id) ON DELETE CASCADE
 );
 
 ----------------------------------------------------------------------

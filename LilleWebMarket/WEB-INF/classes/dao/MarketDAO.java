@@ -32,7 +32,7 @@ public interface MarketDAO
         ArrayList<Sell> getBids(int market_id, boolean opposite);
 
 	/** Try to put a bid with specified parameters
-	 * Return an information message about the transaction.
+	 * @return an information message about the transaction.
 	 */
         void putBid(int bidQuantity, int bidPrice, int marketId, boolean opposite, User u);
 
@@ -40,5 +40,12 @@ public interface MarketDAO
 	 * graphical representation
 	 */
 	String getLogData(int marketId);
+	
+	/** Gets the status of a market
+	 * @return true if market has ended, else false  */
+	boolean[] hasEndedAndMustBeConfirmed(int marketId);
+	
+	/** Close a market, paying all winners & deleting all sells */
+	void closeMarket(int marketId, boolean winner);
 
 }

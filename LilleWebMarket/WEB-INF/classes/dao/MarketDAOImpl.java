@@ -180,7 +180,7 @@ public class MarketDAOImpl implements MarketDAO
 		return ret;
 	}
 
-    public void putBid(int bidQuantity, int bidPrice, int marketId, boolean opposite, User u)
+	public void putBid(int bidQuantity, int bidPrice, int marketId, boolean opposite, User u)
 	{
 		opposite = !opposite;
 		int userId = u.getId();
@@ -201,8 +201,8 @@ public class MarketDAOImpl implements MarketDAO
 			// SELECT sl.stock_id as stockid, owner_id, quantity, (100-price_sell) as price FROM markets m, stocks st, sells sl WHERE m.market_id = 4 AND opposite = false AND st.stock_id = sl.stock_id AND m.market_id = st.market_id AND (100-price_sell) < 25 order by price desc;
 
 			String req = "SELECT sl.stock_id as stockid, owner_id, quantity, (100-price_sell) as price"
-				+ " FROM markets m, stocks st, sells sl"
-				+ " WHERE m.market_id = ? AND opposite = ? AND st.stock_id = sl.stock_id AND m.market_id = st.market_id AND (100-price_sell) <= ? order by price asc;";
+					+ " FROM markets m, stocks st, sells sl"
+					+ " WHERE m.market_id = ? AND opposite = ? AND st.stock_id = sl.stock_id AND m.market_id = st.market_id AND (100-price_sell) <= ? order by price asc;";
 
 			ps = DAOUtil.getPreparedStatement(conn, req, marketId, opposite, bidPrice);
 			rs = ps.executeQuery();
@@ -258,9 +258,9 @@ public class MarketDAOImpl implements MarketDAO
 					req2 = "UPDATE users SET money = money - ? WHERE user_id = ?;";
 					ps2 = DAOUtil.getPreparedStatement(conn, req2, totalExchange, userId);
 					ps2.executeUpdate();
-					
+
 					if (u.getId() != ownerId)
-					    u.setMoney(u.getMoney() - totalExchange);
+						u.setMoney(u.getMoney() - totalExchange);
 
 					//log += "1.4<br>"; // DEBUG
 
@@ -298,7 +298,7 @@ public class MarketDAOImpl implements MarketDAO
 					ps2.executeUpdate();
 
 					if (u.getId() != ownerId)
-					    u.setMoney(u.getMoney() - totalExchange);
+						u.setMoney(u.getMoney() - totalExchange);
 
 					//log += "2.4<br>"; // DEBUG
 
@@ -369,12 +369,12 @@ public class MarketDAOImpl implements MarketDAO
 
 			while (rs.next())
 				ret += "['" + rs.getString("sdate") + "',\t" + rs.getInt("log_quantity") + ",\t" + rs.getInt("log_price") + "],\n";
-				
+
 			if (!ret.equals(""))
 				ret = ret.substring(0, ret.length()-1);
 			else
 				ret += "['No Data', 0, 0]";
-				
+
 			ret += "\n]);";
 		}
 		catch (SQLException e)
@@ -402,8 +402,8 @@ public class MarketDAOImpl implements MarketDAO
 		{
 			conn = this.factory.getConnection();
 			String req = "SELECT login as ownername, quantity, price_sell as price"
-			+ " FROM sells sl, stocks st, users u"
-			+ " WHERE st.market_id = ? AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ? ORDER BY price DESC";
+					+ " FROM sells sl, stocks st, users u"
+					+ " WHERE st.market_id = ? AND owner_id = user_id AND sl.stock_id = st.stock_id AND opposite = ? ORDER BY price DESC";
 
 			ps = DAOUtil.getPreparedStatement(conn, req, market_id, opposite);
 			rs = ps.executeQuery();
@@ -461,4 +461,94 @@ public class MarketDAOImpl implements MarketDAO
 
 		return ret;
 	}
+
+	public boolean[] hasEndedAndMustBeConfirmed(int marketId)
+	{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		boolean ret[] = new boolean[2];
+
+		try
+		{
+			conn = this.factory.getConnection();
+			String req = "SELECT COUNT(*) FROM markets WHERE market_id=? AND end_date < TIMESTAMP 'now';";
+			ps = DAOUtil.getPreparedStatement(conn, req, marketId);
+			rs = ps.executeQuery();
+
+			if (rs.next())
+			{
+				ret[0] = (rs.getInt(1) == 1 ? true : false);
+
+				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL;";
+				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId);
+				rs2 = ps2.executeQuery();
+
+				if (rs2.next())
+					ret[1] = (rs2.getInt(1) == 1 ? true : false);
+			}
+		}
+		catch (SQLException e)
+		{
+			throw new DAOException(e);
+		}
+		finally
+		{
+			DAOUtil.close(rs, ps, conn);
+			DAOUtil.close(rs2);
+			DAOUtil.close(ps2);
+		}
+
+		return ret;
+	}
+
+	public void closeMarket(int marketId, boolean winner)
+	{
+		//String req = "UPDATE stocks S, users U SET U.money=U.money + 100 * "; // pay users //TODO: see for only 1 request
+		// SELECT SUM(quantity) AS req_sum,owner_id AS req_owner_id FROM stocks WHERE market_id=4 AND opposite='false' GROUP BY owner_id;
+		//String req2 = "DELETE FROM markets WHERE market_id=? ;"; // destroy market
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+
+		try
+		{
+			conn = this.factory.getConnection();
+
+			String req = "SELECT SUM(quantity) AS req_sum,owner_id AS req_owner_id FROM stocks WHERE market_id=? AND opposite=? GROUP BY owner_id;";
+			ps = DAOUtil.getPreparedStatement(conn, req, marketId, winner);
+			rs = ps.executeQuery();
+
+			while (rs.next())
+			{
+				int stocks = rs.getInt("req_sum");
+				int userId = rs.getInt("owner_id");
+				String req2 = "UPDATE FROM users SET money = money + 100 * ? WHERE user_id=?;";
+				ps2 = DAOUtil.getPreparedStatement(conn, req, stocks, userId);
+				ps2.executeUpdate();
+			}
+
+			String req3 = "DELETE FROM markets WHERE market_id=?;";
+			ps3 = DAOUtil.getPreparedStatement(conn, req, marketId);
+			ps3.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			throw new DAOException(e);
+		}
+		finally
+		{
+			DAOUtil.close(rs, ps, conn);
+			DAOUtil.close(rs2);
+			DAOUtil.close(ps2);
+			DAOUtil.close(ps3);
+		}
+	}
+
 }
