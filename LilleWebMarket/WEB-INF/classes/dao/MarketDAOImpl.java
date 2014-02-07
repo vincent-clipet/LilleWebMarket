@@ -365,13 +365,13 @@ public class MarketDAOImpl implements MarketDAO
 		try
 		{
 			conn = this.factory.getConnection();
-			String req = "SELECT DATE(sell_date) as sdate, log_price, log_quantity FROM logs WHERE market_id = ?";
+			String req = "SELECT DATE(sell_date) as sdate, log_price, log_quantity FROM logs WHERE market_id = ? ORDER BY sdate DESC LIMIT 25";
 
 			ps = DAOUtil.getPreparedStatement(conn, req, marketId);
 			rs = ps.executeQuery();
 
 			while (rs.next())
-				ret += "['" + rs.getString("sdate") + "',\t" + rs.getInt("log_quantity") + ",\t" + rs.getInt("log_price") + "],\n";
+				ret = "['" + rs.getString("sdate") + "',\t" + rs.getInt("log_quantity") + ",\t" + rs.getInt("log_price") + "],\n" + ret;
 
 			if (!ret.equals(""))
 				ret = ret.substring(0, ret.length()-1);
@@ -465,7 +465,7 @@ public class MarketDAOImpl implements MarketDAO
 		return ret;
 	}
 
-	public boolean[] hasEndedAndMustBeConfirmed(int marketId, int userId)
+	public boolean[] hasEndedAndMustBeConfirmed(int marketId)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -485,8 +485,8 @@ public class MarketDAOImpl implements MarketDAO
 			{
 				ret[0] = (rs.getInt(1) == 1 ? true : false);
 
-				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL AND creator_id=?;";
-				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId, userId);
+				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL;";
+				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId);
 				rs2 = ps2.executeQuery();
 
 				if (rs2.next())
@@ -513,7 +513,6 @@ public class MarketDAOImpl implements MarketDAO
 		// SELECT SUM(quantity) AS req_sum,owner_id AS req_owner_id FROM stocks WHERE market_id=4 AND opposite='false' GROUP BY owner_id;
 		//String req2 = "DELETE FROM markets WHERE market_id=? ;"; // destroy market
 
-		System.out.println("DEBUG : closeMarket("+marketId+", "+winner+")");
 		Connection conn = null;
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;
