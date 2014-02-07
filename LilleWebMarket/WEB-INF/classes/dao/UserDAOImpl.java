@@ -106,16 +106,16 @@ public class UserDAOImpl implements UserDAO
 		return u;
 	}
 	
-	public boolean promote(String role)
+	/*public boolean promote(String role)
 	{
 		//TODO
 		return false;
-	}
+	}*/
 	
-	public boolean demote(String role)
+	/*public boolean demote(String role)
 	{
 		//TODO
 		return false;
-	}
+	}*/
 
 }

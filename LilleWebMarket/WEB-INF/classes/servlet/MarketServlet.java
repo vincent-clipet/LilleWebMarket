@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Market;
 import beans.Sell;
+import beans.User;
 
 // import ;
 // import ;
@@ -24,7 +25,7 @@ public class MarketServlet extends CustomHttpServlet
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		super.initInstance(req, res);
-		super.storeUser();
+		User u = super.storeUser();
 
 		Market m = (Market) (req.getAttribute("marketBean"));
 
@@ -32,15 +33,17 @@ public class MarketServlet extends CustomHttpServlet
 		int marketId = 0;
 		Boolean winner = null;
 
-		String pwinner = req.getParameter("winner");
-
 		try {opposite = Boolean.parseBoolean(req.getParameter("opposite"));}
 		catch (Exception e) {}
 
 		try {marketId = Integer.parseInt(req.getParameter("id"));}
 		catch (Exception e) {}
 
-		try {if (pwinner != null){winner = Boolean.valueOf(pwinner);}}
+		try
+		{
+			String requestWinner = req.getParameter("winner");
+			winner = (requestWinner == null || requestWinner.equals("") ? null : Boolean.valueOf(requestWinner));
+		}
 		catch (Exception e) {}
 
 		if (m == null)
@@ -50,7 +53,7 @@ public class MarketServlet extends CustomHttpServlet
 
 		if (winner != null)
 		{
-			marketDao.closeMarket(marketId, winner);
+			marketDao.closeMarket(marketId, (boolean) winner);
 			super.forward("index");
 		}
 		else
@@ -58,7 +61,7 @@ public class MarketServlet extends CustomHttpServlet
 			ArrayList<Sell> asks = marketDao.getAsks(marketId, opposite);
 			ArrayList<Sell> bids = marketDao.getBids(marketId, opposite);
 			String logData = marketDao.getLogData(marketId);
-			boolean[] b = marketDao.hasEndedAndMustBeConfirmed(m.getMarketId());
+			boolean[] b = marketDao.hasEndedAndMustBeConfirmed(m.getMarketId(), u.getId());
 
 			if (b[1] && ! req.isUserInRole("marketmaker"))
 				b[1] = false;

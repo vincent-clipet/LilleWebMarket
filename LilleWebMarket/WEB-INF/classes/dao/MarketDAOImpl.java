@@ -465,7 +465,7 @@ public class MarketDAOImpl implements MarketDAO
 		return ret;
 	}
 
-	public boolean[] hasEndedAndMustBeConfirmed(int marketId)
+	public boolean[] hasEndedAndMustBeConfirmed(int marketId, int userId)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -485,8 +485,8 @@ public class MarketDAOImpl implements MarketDAO
 			{
 				ret[0] = (rs.getInt(1) == 1 ? true : false);
 
-				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL;";
-				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId);
+				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL AND creator_id=?;";
+				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId, userId);
 				rs2 = ps2.executeQuery();
 
 				if (rs2.next())
@@ -513,6 +513,7 @@ public class MarketDAOImpl implements MarketDAO
 		// SELECT SUM(quantity) AS req_sum,owner_id AS req_owner_id FROM stocks WHERE market_id=4 AND opposite='false' GROUP BY owner_id;
 		//String req2 = "DELETE FROM markets WHERE market_id=? ;"; // destroy market
 
+		System.out.println("DEBUG : closeMarket("+marketId+", "+winner+")");
 		Connection conn = null;
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;

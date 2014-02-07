@@ -151,8 +151,8 @@
 	%>
 	<div id='buy-form' >
 	  <form method="get" action='buy'>
-	    <input type="text" name="id" value='<%= marketId %>' hidden/>
-	    <input type="text" name="opposite" value='<%= opposite %>' hidden/>
+	    <input type="text" name="id" value='<%= marketId %>' hidden />
+	    <input type="text" name="opposite" value='<%= opposite %>' hidden />
 
 	    <input type="text" name="quantity" placeholder="quantity"/>
 	    <input type="text" name="price" placeholder="price"/>
@@ -178,6 +178,8 @@
 	  <form method="get" action='market'>
 		<input type="radio" name="winner" value="false" /><jsp:getProperty name="marketBean" property="info" />
 		<input type="radio" name="winner" value="true" /><jsp:getProperty name="marketBean" property="oppositeInfo" />
+		<input type="text" name="id" value='<%= marketId %>' hidden/>
+		<input type="text" name="opposite" value='<%= opposite %>' hidden />
 	    <input class="bouton" type="submit" value="Confimer la fin de ce marché"/>
 	  </form>
 	</div><!-- end div #buy-form -->

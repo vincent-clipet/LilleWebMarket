@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, users_roles, markets, logs, stocks, sells;
+DROP TABLE IF EXISTS users, users_roles, markets, logs, stocks, sells CASCADE;
 
 -- USERS
 CREATE TABLE users
@@ -98,7 +98,8 @@ INSERT INTO users_roles(login, role) VALUES('admin1', 'marketmaker');
 INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('On aura une bonne note à ce projet', 'On n''aura pas une bonne note à ce projet', TIMESTAMP '2016-01-01 00:00:00', 3);
 INSERT INTO markets(info, opposite_info, end_date, creator_id, winner) VALUES ('On va galérer en système cette année', 'Tout va être easy en système cette année', TIMESTAMP '2014-01-01 01:00:00', 3, 'false');
 INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Demode arrivera 1 fois à l''heure cette année', 'Demode n''arrivera jamais à l''heure cette année', TIMESTAMP '2014-03-30 01:00:00', 3);
-INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Marche +', 'Marche-', TIMESTAMP '2014-03-30 01:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Marche +', 'Marche -', TIMESTAMP '2014-03-30 01:00:00', 3);
+INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES ('Marche test fin +', 'Marche test fin -', TIMESTAMP '2014-01-30 12:00:00', 3);
 
 
 -- STOCKS
@@ -112,6 +113,13 @@ INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (2, 'false', 
 INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'false', 4, 4);
 INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (3, 'false', 4, 4);
 
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (3, 'true', 1, 5);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (5, 'true', 1, 5);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (8, 'false', 2, 5);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (7, 'false', 2, 5);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (9, 'true', 1, 5);
+INSERT INTO stocks(quantity, opposite, owner_id, market_id) VALUES (1, 'false', 2, 5);
+
 
 -- SELLS
 INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-02 23:05:49', 70, 4);
@@ -119,3 +127,6 @@ INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-03
 INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-04 20:50:01', 90, 6);
 INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-05 20:50:01', 80, 7);
 INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-06 20:50:01', 60, 8);
+
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-06 20:50:01', 60, 9);
+INSERT INTO sells(sell_date, price_sell, stock_id) VALUES (TIMESTAMP '2014-01-06 20:50:01', 60, 10);

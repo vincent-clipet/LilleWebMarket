@@ -13,8 +13,8 @@ public interface UserDAO
 	 * @return the created user */
 	User createUser(String login, String password, User u) throws DAOException;
 	
-	boolean promote(String role);
+	//boolean promote(String role);
 	
-	boolean demote(String role);
+	//boolean demote(String role);
 	
 }

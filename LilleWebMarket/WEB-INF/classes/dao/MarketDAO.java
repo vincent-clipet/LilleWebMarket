@@ -43,7 +43,7 @@ public interface MarketDAO
 	
 	/** Gets the status of a market
 	 * @return true if market has ended, else false  */
-	boolean[] hasEndedAndMustBeConfirmed(int marketId);
+	boolean[] hasEndedAndMustBeConfirmed(int marketId, int userId);
 	
 	/** Close a market, paying all winners & deleting all sells */
 	void closeMarket(int marketId, boolean winner);
