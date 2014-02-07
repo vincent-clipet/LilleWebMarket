@@ -465,14 +465,14 @@ public class MarketDAOImpl implements MarketDAO
 		return ret;
 	}
 
-	public boolean[] hasEndedAndMustBeConfirmed(int marketId)
+	public boolean[] hasEndedAndMustBeConfirmed(int marketId, int creatorId)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		boolean ret[] = new boolean[2];
+		boolean ret[] = new boolean[] {false, false};
 
 		try
 		{
@@ -485,12 +485,12 @@ public class MarketDAOImpl implements MarketDAO
 			{
 				ret[0] = (rs.getInt(1) == 1 ? true : false);
 
-				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL;";
-				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId);
+				String req2 = "SELECT COUNT(*) FROM markets WHERE market_id=? AND winner IS NULL AND creator_id=? AND end_date < TIMESTAMP 'now';";
+				ps2 = DAOUtil.getPreparedStatement(conn, req2, marketId, creatorId);
 				rs2 = ps2.executeQuery();
 
 				if (rs2.next())
-					ret[1] = (rs2.getInt(1) == 1 ? true : false);
+					ret[1] = (rs2.getInt(1) == 1);
 			}
 		}
 		catch (SQLException e)

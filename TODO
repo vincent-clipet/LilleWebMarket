@@ -1,5 +1,4 @@
 * Encrypter mots de passe
-X Factoriser profil dans un 'include' + Design profil
 * Afficher le portefeuille d'actions de l'utilisateur
 * Afficher message erreur quand login fail
 * Régler problème date Postgresql
@@ -8,3 +7,4 @@ X Factoriser profil dans un 'include' + Design profil
 * check ordre par date des ordres dans un marché
 * possibilité de vendre des actions précedemment achetées
 * promotion en marketmaker
+* cacher formulaire de fermeture de marché

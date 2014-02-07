@@ -63,9 +63,6 @@ public class MarketServlet extends CustomHttpServlet
 			String logData = marketDao.getLogData(marketId);
 			boolean[] b = marketDao.hasEndedAndMustBeConfirmed(m.getMarketId(), u.getId());
 
-			if (b[1] && ! req.isUserInRole("marketmaker"))
-				b[1] = false;
-
 			req.setAttribute("hasEnded", b[0]);
 			req.setAttribute("mustBeConfirmed", b[1]);
 			req.setAttribute("logData", logData);
