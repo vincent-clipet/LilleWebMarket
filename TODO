@@ -1,5 +1,4 @@
 * Encrypter mots de passe
-? Echapper les caractères des formulaires
 X Factoriser profil dans un 'include' + Design profil
 * Afficher le portefeuille d'actions de l'utilisateur
 * Afficher message erreur quand login fail

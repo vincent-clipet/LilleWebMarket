@@ -37,7 +37,6 @@ public class MarketCreate extends CustomHttpServlet
 
 		if (hours == -1 && info == null && oppositeInfo == null)
 		{
-			req.setAttribute("message", "1 : " + hours + " " + info + " " + oppositeInfo);
 			super.forward("market_create.jsp");
 		}
 		else if (hours <= 0)
@@ -57,7 +56,6 @@ public class MarketCreate extends CustomHttpServlet
 		}
 		else
 		{
-			req.setAttribute("message", "5");
 			Market market = super.marketDao.createMarket(info, oppositeInfo, hours, u.getId(), null);
 			super.forward("market?id=" + market.getMarketId() + "&opposite=false");
 		}
