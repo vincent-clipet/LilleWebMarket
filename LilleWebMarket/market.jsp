@@ -42,6 +42,8 @@
     </script>
   </head>
   <body>
+  	<jsp:useBean id="userBean" scope="session" class="beans.User" />
+  
     <jsp:include page="header.jsp" />
 
     <jsp:useBean id="marketBean" scope="request" class="beans.Market" />
@@ -66,16 +68,6 @@
        hasEnded = (Boolean) (request.getAttribute("hasEnded"));
        mustBeConfirmed = (Boolean) (request.getAttribute("mustBeConfirmed"));
        %>
-
-
-    <div id='profile'>
-      <img src="images/photo.png"/>
-      <div id='infos'>
-	<p id='login'><jsp:getProperty name="userBean" property="login" /></p>
-	<p id='account'>Compte : <jsp:getProperty name="userBean" property="money" /></p>
-	<form method='post' action='disconnect' ><input id='disconnect-button' type="submit" value="Disconnect"/></form>
-      </div>
-    </div>
     
     <div id='menu'>
       <ul>

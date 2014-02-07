@@ -111,7 +111,7 @@ public class MarketDAOImpl implements MarketDAO
 		{
 			conn = this.factory.getConnection();
 
-			String req = "INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES(?, ?, current_timestamp + interval '24 hours', ?);";
+			String req = "INSERT INTO markets(info, opposite_info, end_date, creator_id) VALUES(?, ?, current_timestamp + interval '"+hours+" hours', ?);";
 			ps = conn.prepareStatement(req, PreparedStatement.RETURN_GENERATED_KEYS);
 
 			ps.setString(1, info);
