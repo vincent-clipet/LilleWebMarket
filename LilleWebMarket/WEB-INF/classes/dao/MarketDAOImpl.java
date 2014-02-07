@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import java.io.StringWriter;
+import java.io.PrintWriter;
 //import org.postgresql.util.PGInterval;
 
 import beans.Market;
@@ -521,26 +524,31 @@ public class MarketDAOImpl implements MarketDAO
 		{
 			conn = this.factory.getConnection();
 
-			String req = "SELECT SUM(quantity) AS req_sum,owner_id AS req_owner_id FROM stocks WHERE market_id=? AND opposite=? GROUP BY owner_id;";
+			String req = "SELECT SUM(quantity) AS req_sum, owner_id AS req_owner_id FROM stocks WHERE market_id=? AND opposite=? GROUP BY owner_id;";
 			ps = DAOUtil.getPreparedStatement(conn, req, marketId, winner);
 			rs = ps.executeQuery();
 
 			while (rs.next())
 			{
 				int stocks = rs.getInt("req_sum");
-				int userId = rs.getInt("owner_id");
-				String req2 = "UPDATE FROM users SET money = money + 100 * ? WHERE user_id=?;";
-				ps2 = DAOUtil.getPreparedStatement(conn, req, stocks, userId);
+				int userId = rs.getInt("req_owner_id");
+				String req2 = "UPDATE users SET money = money + 100 * ? WHERE user_id=?;";
+				ps2 = DAOUtil.getPreparedStatement(conn, req2, stocks, userId);
 				ps2.executeUpdate();
 			}
 
 			String req3 = "DELETE FROM markets WHERE market_id=?;";
-			ps3 = DAOUtil.getPreparedStatement(conn, req, marketId);
+			ps3 = DAOUtil.getPreparedStatement(conn, req3, marketId);
 			ps3.executeUpdate();
 		}
 		catch (SQLException e)
 		{
-			throw new DAOException(e);
+		    String err = e.toString();
+		    StringWriter sw = new StringWriter();
+		    PrintWriter pw = new PrintWriter(sw);
+		    e.printStackTrace(pw);
+		    err += sw.toString();
+		    throw new DAOException(err);
 		}
 		finally
 		{

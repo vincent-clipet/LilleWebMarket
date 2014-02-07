@@ -71,8 +71,8 @@
        asks = (ArrayList<Sell>) (request.getAttribute("asks"));
        bids = (ArrayList<Sell>) (request.getAttribute("bids"));
        message = (String) (request.getAttribute("message"));
-	   hasEnded = (Boolean) (request.getAttribute("hasEnded"))
-	   mustBeConfirmed = (Boolean) (request.getAttribute("mustBeConfirmed"));
+       hasEnded = (Boolean) (request.getAttribute("hasEnded"));
+       mustBeConfirmed = (Boolean) (request.getAttribute("mustBeConfirmed"));
        %>
 
 

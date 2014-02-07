@@ -32,13 +32,15 @@ public class MarketServlet extends CustomHttpServlet
 		int marketId = 0;
 		Boolean winner = null;
 
+		String pwinner = req.getParameter("winner");
+
 		try {opposite = Boolean.parseBoolean(req.getParameter("opposite"));}
 		catch (Exception e) {}
 
 		try {marketId = Integer.parseInt(req.getParameter("id"));}
 		catch (Exception e) {}
 
-		try {winner = Boolean.valueOf(req.getParameter("winner"));}
+		try {if (pwinner != null){winner = Boolean.valueOf(pwinner);}}
 		catch (Exception e) {}
 
 		if (m == null)
