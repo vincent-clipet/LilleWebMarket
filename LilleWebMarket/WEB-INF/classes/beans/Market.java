@@ -1,6 +1,6 @@
 package beans;
 
-
+/** Marché */
 public class Market
 {
 

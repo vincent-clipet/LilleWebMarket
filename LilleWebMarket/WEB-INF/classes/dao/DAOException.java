@@ -1,5 +1,6 @@
 package dao;
 
+/** Exception personnalisée pour toutes les erreurs liées à la couche DAO */
 public class DAOException extends RuntimeException
 {
 

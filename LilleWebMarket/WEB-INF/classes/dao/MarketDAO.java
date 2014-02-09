@@ -9,43 +9,36 @@ import beans.Sell;
 public interface MarketDAO
 {
 
-	/** Gets the market corresponding to this id
-	 * @return the asked market if it existed, else null  */
+	/** Retourne le marché correspondant à cet ID  */
 	Market getMarket(int market_id, Market m) throws DAOException;
 
-	/** Gets the next n markets which will end
-	 * @return the n next markets */
+	/** Retourne les n prochains marchés qui doivent se terminer */
 	ArrayList<Market> getNextMarkets(int nb) throws DAOException;
 
-	/** Creates a new market in database
-	 * @return the created market */
+	/** Crée un nouveau marché dans la base de données */
 	Market createMarket(String info, String opposite_info, int hours, int creator_id, Market m) throws DAOException;
 
-	/** Returns an arraylist of asks
-	 * for this market (side according to the boolean)
-	 */
+	/** Retourne la liste des propositions d'achat pour un marché 
+	 * (opposite : définit le sens du marché (positif ou négatif)) */
 	ArrayList<Sell> getAsks(int market_id, boolean opposite);
 
-	/** Returns an arraylist of bids
-	 * for this market (side according to the boolean)
-	 */
-        ArrayList<Sell> getBids(int market_id, boolean opposite);
+	/** Retourne la liste des propositions de vente pour un marché 
+	 * (opposite : définit le sens du marché (positif ou négatif)) */
+	ArrayList<Sell> getBids(int market_id, boolean opposite);
 
-	/** Try to put a bid with specified parameters
-	 * @return an information message about the transaction.
-	 */
-        void putBid(int bidQuantity, int bidPrice, int marketId, boolean opposite, User u);
+	/** Tente de créer une proposition d'achat. 
+	 * Si la proposition match des propositions de ventes, effectue les transferts d'argenet de d'actions */
+	void putBid(int bidQuantity, int bidPrice, int marketId, boolean opposite, User u);
 
-	/** Return formated exchange data to use in
-	 * graphical representation
-	 */
+	/** Retourne les données d'un marché formattées pour un affichage graphique */
 	String getLogData(int marketId);
-	
-	/** Gets the status of a market
-	 * @return true if market has ended, else false  */
+
+	/** Récupère le statut d'un marché
+	 * [0] : true si le marché est terminé 
+	 * [1] : true si le marché doit être validé & que l'utilisateur actuel est le créateur de ce marché */
 	boolean[] hasEndedAndMustBeConfirmed(int marketId, int userId);
-	
-	/** Close a market, paying all winners & deleting all sells */
+
+	/** Ferme un marché : distribue l'argent et supprime toutes traces du marché dans la base de données */
 	void closeMarket(int marketId, boolean winner);
 
 }

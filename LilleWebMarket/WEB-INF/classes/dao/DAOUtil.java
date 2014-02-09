@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/** Utilitaires liés à la DAO */
 public class DAOUtil
 {
 
@@ -16,10 +17,13 @@ public class DAOUtil
 	{
 
 	}
+	
+	
 
 	//
 	// METHODS
 	//
+	/** Permet de fermer un ResultSet */
 	public static void close(ResultSet rs)
 	{
 		if (rs != null)
@@ -35,6 +39,7 @@ public class DAOUtil
 		}
 	}
 
+	/** Permet de fermer un Statement */
 	public static void close(Statement st)
 	{
 		if (st != null)
@@ -50,6 +55,7 @@ public class DAOUtil
 		}
 	}
 
+	/** Permet de fermer une Connection */
 	public static void close(Connection conn)
 	{
 		if (conn != null)
@@ -65,6 +71,7 @@ public class DAOUtil
 		}
 	}
 	
+	/** Permet de fermer un ResultSet, un Statement & une Connection */
 	public static void close(ResultSet rs, Statement st, Connection conn)
 	{
 		close(rs);
@@ -73,7 +80,7 @@ public class DAOUtil
 	}
 	
 	
-
+	/** Permet de récupérer un PreparedStatement et de définir ses paramètres */
 	public static PreparedStatement getPreparedStatement(Connection conn, String req, Object... objects) throws SQLException
 	{
 		PreparedStatement preparedStatement = conn.prepareStatement(req);

@@ -1,6 +1,6 @@
 package beans;
 
-
+/** Proposition d'achat */
 public class Sell
 {
 

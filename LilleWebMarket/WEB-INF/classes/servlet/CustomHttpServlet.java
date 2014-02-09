@@ -36,6 +36,7 @@ public class CustomHttpServlet extends HttpServlet
 	//
 	// METHODS
 	//	
+	/** Initialise les variables pour la requete actuelle */
 	protected void initInstance(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		this.req = req;
@@ -56,35 +57,36 @@ public class CustomHttpServlet extends HttpServlet
 			stockDao = factory.getStockDAO();
 	}
 
+	/** Enregistre l'utilisateur actuel dans la session */
 	protected User storeUser()
 	{
 		User u = (User) ((req.getSession(true)).getAttribute("userBean"));
 
 		//		if (u == null)
 		//{
-			if (req.getUserPrincipal() != null)
-			{
-				u = new User();
-				userDao.getUser(req.getUserPrincipal().getName(), u);
-				session.setAttribute("userVisibility", "visible");
-				session.setAttribute("userBean", u);
-			}
-			else
-				session.setAttribute("userVisibility", "hidden");
-			//session.setAttribute("userBean", null);
-			//}
-		
+		if (req.getUserPrincipal() != null)
+		{
+			u = new User();
+			userDao.getUser(req.getUserPrincipal().getName(), u);
+			session.setAttribute("userVisibility", "visible");
+			session.setAttribute("userBean", u);
+		}
+		else
+			session.setAttribute("userVisibility", "hidden");
+
 		return u;
 	}
 
+	/** Redirige le traitement vers une autre page */
 	protected void forward(String jsp) throws ServletException, IOException
 	{
 		req.getRequestDispatcher(jsp).forward(req, res);
 	}
-	
+
+	/** Echappe une chaine de caractères avant traitement */
 	protected String escapeChars(String input)
 	{
 		return StringEscapeUtils.escapeHtml4(input);
 	}
-	
+
 }

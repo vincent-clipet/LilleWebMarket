@@ -8,14 +8,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+/** Factory permettant d'unifier les interactions avec la base de données (pool de connexion, etc ...
+ * mais également de  */ 
 public class DAOFactory
 {
 
 	//
 	// ATTRIBUTES
 	//
-	private DataSource ds;
-	private final static String filename = "/bdd_config.txt"; 
+	private DataSource ds; 
 
 
 
@@ -32,8 +33,9 @@ public class DAOFactory
 	//
 	// METHODS
 	//
+	/** Charge la DAOFactory au lancement de l'application */
 	public static DAOFactory getInstance() throws DAOException
-	{;
+	{
 		String db_driver = "org.postgresql.Driver"; //TODO: config
 		DataSource pool = null;
 		
@@ -41,7 +43,7 @@ public class DAOFactory
 		{
 			Class.forName(db_driver);
 		}
-		catch ( ClassNotFoundException e )
+		catch (ClassNotFoundException e)
 		{
 			throw new DAOException("Can't load driver " + db_driver + ".");
 		}
@@ -50,7 +52,7 @@ public class DAOFactory
 		{
 			Context initialContext = new InitialContext();
 			Context envContext = (Context) initialContext.lookup("java:/comp/env");
-			DataSource datasource = (DataSource) envContext.lookup("jdbc/base1"); //TODO: config
+			DataSource datasource = (DataSource) envContext.lookup("jdbc/base1");
 			pool = datasource;
 		}
 		catch (NamingException e)
@@ -63,7 +65,7 @@ public class DAOFactory
 		return instance;
 	}
 
-	Connection getConnection() throws SQLException
+	Connection getConnection() throws SQLException, NullPointerException
 	{
 		return this.ds.getConnection();
 	}

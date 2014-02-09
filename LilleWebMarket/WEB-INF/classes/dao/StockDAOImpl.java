@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import beans.Stock;
 
-public class StockDAOImpl implements StockDAO
+public class StockDAOImpl implements StockDAO, IDAOObject<Stock>
 {
 
 	//
@@ -30,17 +30,17 @@ public class StockDAOImpl implements StockDAO
 	//
 	// METHODS
 	//
-	private Stock map(ResultSet rs, Stock s) throws SQLException
+	public Stock map(ResultSet rs, Stock s) throws SQLException
 	{
 		if (s == null)
 			s = new Stock();
-		
+
 		s.setId(rs.getInt("stock_id"));
 		s.setQuantity(rs.getInt("quantity"));
 		s.setOpposite(rs.getBoolean("opposite"));
 		s.setOwnerId(rs.getInt("owner_id"));
 		s.setMarketId(rs.getInt("market_id"));
-		
+
 		return s;
 	}
 
@@ -76,8 +76,6 @@ public class StockDAOImpl implements StockDAO
 	@Override
 	public Stock createStock(int quantity, boolean opposite, int owner_id, int market_id, Stock s) throws DAOException
 	{
-		//TODO use generated_keys ?
-		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -89,11 +87,11 @@ public class StockDAOImpl implements StockDAO
 			ps = DAOUtil.getPreparedStatement(conn, req, quantity, opposite, owner_id, market_id);
 			ps.executeUpdate();
 			DAOUtil.close(ps);
-			
+
 			req = "SELECT * FROM stocks WHERE quantity=? AND opposite=? AND owner_id=? AND market_id=?;";
 			ps = DAOUtil.getPreparedStatement(conn, req, quantity, opposite, owner_id, market_id);
 			rs = ps.executeQuery();
-			
+
 			if (rs.next())
 				s = map(rs, null);
 		}
@@ -107,13 +105,6 @@ public class StockDAOImpl implements StockDAO
 		}
 
 		return s;
-	}
-	
-	@Override
-	public Stock[] splitStock(Stock stock, int quantityToDraw)
-	{
-		//TODO
-		return null;
 	}
 
 }

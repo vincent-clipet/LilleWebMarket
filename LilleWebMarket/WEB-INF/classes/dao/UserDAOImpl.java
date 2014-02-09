@@ -7,7 +7,8 @@ import java.sql.SQLException;
 
 import beans.User;
 
-public class UserDAOImpl implements UserDAO
+/** Implémentation concrète de l'interface UserDAO */
+public class UserDAOImpl implements UserDAO, IDAOObject<User>
 {
 
 	//
@@ -29,20 +30,18 @@ public class UserDAOImpl implements UserDAO
 
 	//
 	// METHODS
-	//	
-	private User map(ResultSet rs, User u) throws SQLException
+	//
+	public User map(ResultSet rs, User u) throws SQLException
 	{
 		if (u == null)
 			u = new User();
-			
+
 		u.setId(rs.getInt("user_id"));
 		u.setLogin(rs.getString("login"));
 		u.setPassword(rs.getString("password"));
 		u.setMoney(rs.getInt("money"));
 		return u;
 	}
-	
-
 
 	public User getUser(String login, User u) throws DAOException
 	{
@@ -81,16 +80,16 @@ public class UserDAOImpl implements UserDAO
 		try
 		{
 			conn = this.factory.getConnection();
-			
+
 			String req = "INSERT INTO users(login, password) VALUES(?,?);";
 			ps = DAOUtil.getPreparedStatement(conn, req, login, password);
 			ps.executeUpdate();
 			DAOUtil.close(ps);
-			
+
 			req = "SELECT * FROM users WHERE login=?;";
 			ps = DAOUtil.getPreparedStatement(conn, req, login);
 			rs = ps.executeQuery();
-			
+
 			if (rs.next())
 				u = map(rs, null);
 		}
@@ -105,17 +104,5 @@ public class UserDAOImpl implements UserDAO
 
 		return u;
 	}
-	
-	/*public boolean promote(String role)
-	{
-		//TODO
-		return false;
-	}*/
-	
-	/*public boolean demote(String role)
-	{
-		//TODO
-		return false;
-	}*/
 
 }

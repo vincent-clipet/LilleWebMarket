@@ -1,5 +1,6 @@
 package beans;
 
+/** Action achetée ou en vente sur un marché */
 public class Stock
 {
 

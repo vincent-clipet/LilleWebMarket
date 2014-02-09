@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+/** Lsteneur permettant de charger la DAOFactory dans le contexte actuel au lancement de l'application */
 public class DAOFactoryInitializer implements ServletContextListener
 {
 	
@@ -27,7 +28,7 @@ public class DAOFactoryInitializer implements ServletContextListener
 	public void contextInitialized(ServletContextEvent e)
 	{
 		ServletContext sc = e.getServletContext();
-        this.factory = DAOFactory.getInstance();
+        this.factory = DAOFactory.getInstance(sc.getInitParameter("")); //TODO
         sc.setAttribute("dao_factory", this.factory);
 	}
 

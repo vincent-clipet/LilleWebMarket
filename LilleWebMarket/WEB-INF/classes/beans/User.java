@@ -1,7 +1,6 @@
 package beans;
 
-
-
+/** Utilisateur connecté sur le site */
 public class User
 {
 
