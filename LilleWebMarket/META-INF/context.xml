@@ -13,18 +13,10 @@
 		driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://sqlserv:5432/da2i"
 	/>
-	
-	<!--<ResourceLink
-		global="jdbc/base1"
-		name="jdbc/base1"
-		type="javax.sql.DataSource"
-	/>-->
-  
 
-  
-  
-	<!-- Definition du Realm sans pool -->
-	
+
+
+	<!-- Definition du Realm sans pool -->	
 	<Realm 
 		className="org.apache.catalina.realm.JDBCRealm"
 		debug="99"
@@ -40,9 +32,6 @@
 	/>
 	
 
-
-	
-	
 
   <!-- Definition du Realm via le pool -->
 	<!--
@@ -61,13 +50,16 @@
 
 
 
-
   <!-- Definition d'une valve d'acces -->
   <Valve
 	className="org.apache.catalina.valves.AccessLogValve"
     prefix="lillewebmarket_access1."
 	suffix=".txt"
     pattern="common"
-	/>
+  />
+  
+  
+  
+  <Parameter name="db_driver" value="org.postgresql.Driver" /> 
  
 </Context>

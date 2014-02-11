@@ -28,7 +28,7 @@ public class DAOFactoryInitializer implements ServletContextListener
 	public void contextInitialized(ServletContextEvent e)
 	{
 		ServletContext sc = e.getServletContext();
-        this.factory = DAOFactory.getInstance(sc.getInitParameter("")); //TODO
+        this.factory = DAOFactory.getInstance(sc.getInitParameter("db_driver")); //TODO
         sc.setAttribute("dao_factory", this.factory);
 	}
 

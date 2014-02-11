@@ -34,9 +34,8 @@ public class DAOFactory
 	// METHODS
 	//
 	/** Charge la DAOFactory au lancement de l'application */
-	public static DAOFactory getInstance() throws DAOException
+	public static DAOFactory getInstance(String db_driver) throws DAOException
 	{
-		String db_driver = "org.postgresql.Driver"; //TODO: config
 		DataSource pool = null;
 		
 		try
