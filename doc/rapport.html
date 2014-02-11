@@ -1,0 +1,153 @@
+<h1>Rapport projet web</h1>
+
+<hr /><br />
+
+<h2>Auteurs</h2>
+
+<hr />
+
+<p>Vincent CLIPET (https://github.com/vincent-clipet)<br />
+Martin PIFFAULT (https://github.com/mpiffault)</p>
+
+<p>Adresse du projet : https://github.com/vincent-clipet/LilleWebMarket</p><br />
+
+<h2>Installation</h2>
+
+<hr />
+
+<ul>
+	<li>Déployer le fichier .war via l'interface d'administration de tomcat</li>
+	<li>Modifier le fichier webapps/LilleWebmarket/META-INF/context.xml pour configurer la connexion à la base de données</li>
+	<li>Créer les tables dans le SGBD grâce au fichier utils/create_table.sql<br />
+(Par défaut, 5 utilisateurs sont créés, dont 1 marketmaker. La base est pré-remplie avec des données d'exemple)</li>
+</ul><br />
+
+<h2>Implémentation</h2>
+
+<hr />
+
+<h3>MCD</h3>
+
+<p>
+Le MCD est composé de 4 tables (+ 1 non-indispensable; + 1 non-représentée), représentant les entités nécessaires à la réalisation du cahier des charges :
+<ul>
+	<li>La table  <strong>markets</strong> représente un couple de marchés. Elle contient les intitulé du marché et de son opposé, et sa date de fin (la colonne <em>winner</em> est présente mais pas réellement utilisée)</li>
+	<li>La table <strong>users</strong> représente les utilisateurs de l'application. Elle contient le login, le mot de passe et l'argent d'un joueur.</li>
+	<li>La table <strong>stocks</strong> représente 2 choses : soit une action achetée par un utilisateur, soit une proposition d'achat si il existe une entrée correspondante dans la table <em>sells</em>. Un 'stock' contient une quantité et un 'sens' (positif ou négatif) selon le marché.</li>
+	<li>La table <strong>sells</strong> est une 'extension' de la table <em>stocks</em>. Elle contient la date de création d'une proposition d'achat, et un prix.</li>
+	<li>(Non-indispensable) La table 'logs' contient les enregistements de chaque achat effectué sur un marché. Elle ne participe pas réellement fonctionnement 'vital' de l'application, mais permet d'afficher les graphiques de prix.</li>
+	<li>(Non-représentée) La table 'users_roles' contient les différents rôles de chaque utilisateur. Elle n'est pas représentée ici car elle est utilisée par le realm d'authentification, et pas directement par l'application.</li>
+</ul>
+
+Nous nous somme rendu compte que la particularité des offres d'achat par rapport aux actions possédées par un utilisateur est qu'elles possèdent un prix et une date d'offre.<br />
+Dans le cas d'une offre ("sell" dans notre modèle), la référence à un utilisateur représente "l'offrant", tandis que pour une action ("stock" dans notre modèle) la référence représente le "propriétaire".<br /><br />
+Ainsi nous somme arrivés à la solution d'une table 'stocks' qui référence un marché et un propriétaire, une indication du "sens" du marché sur lequel se trouve l'action, et une quantité. Cela suffit à représenter les actions possédées par un utilisateur.<br />
+Pour les offres, nous devons ajouter à ces informations une notion de prix et de date d'offre. Pour cela, nous avons mis en place la table 'sells' qui référence une action à laquelle elle ajoute ces informations.<br />
+Ainsi, une action référencée dans 'sells' devient une offre. Dès qu'une des ces offres trouve preneur, l'entrée dans sells est supprimée, et l'action miroir portant les informations du preneur est crée dans la table <em>stocks</em>.
+</p>
+
+<h3>Pattern MVC</h3>
+
+<p>L'application suit un modèle MVC, où les vues sont les JSP, les contrôleurs sont les servlets, et les autres classes sont les modèles ou servent à manipuler ceux-ci. (cf. <em>DAO</em> ci-dessous)
+</p>
+
+<h3>Pattern DAO et architecture 5 couches</h3>
+
+<p>L'application utilise un pseudo-<em>pattern DAO</em> pour accéder aux données dans le SGBD; ainsi qu'une pseudo-<em>architecture 5 couches</em> permettant de la diviser en sous-blocs réutilisables.<br />
+Le pseudo-<em>pattern DAO</em> ne respecte pas exactement les règles d'une couche DAO, mais en reprend les principes. En effet, les classes DAO ne contiennent pas toutes les 4 méthodes <em>map / create / update / delete</em> nécessaire à la réalisation d'un vrai pattern DAO; mais ces classes sont les seules à interagir avec la base de données.<br />
+<br />
+Le modèle en 5 couches (Utilisateur - Business Objects - Data Objects - Data Access Objects - SGBD) est quasiment respecté, si ce n'est que les couches BO et DO se confondent.<br />
+
+<ul>
+	<li>La classe <strong>DAOFactoryInitializer</strong> est un listener qui permet d'instancier une <strong>DAOFactory</strong> au lancement de l'application. C'est cette dernière qui gère la liaison avec le pool de connexion, et qui 'distribue' les objets permettant d'accéder à la couche DAO.</li>
+	<li>La classe <strong>DAOUtil</strong> contient des méthodes statiques utilitaires, comme la fermeture des ResultSet ou la création des PreparedStatement.</li>
+	<li>L'interface <strong>IDAOObject</strong> contient la méthode 'map' permettant de mapper un ResultSet avec les Data Objects. Elle devrait également contenir les méthodes 'create', 'update' et 'delete' (cf. <em>Si nous avions eu plus de temps</em>)</li>
+	<li>Les interfaces <strong>MarketDAO</strong>  <strong>UserDAO</strong> et <strong>StockDAO</strong> définissent les signatures des méthodes des classes <strong>MarketDAOImpl</strong>  <strong>UserDAOImpl</strong> et <strong>StockDAOImpl</strong>  qui forment la couche DAO.</li>
+	<li>Les classes <strong>User</strong>  <strong>Stock</strong>  <strong>Market</strong> et <strong>Sell</strong> sont des beans, et forment la pseudo-couche BO-DO</li>
+	<li>Les servlets héritent toutes de <strong>CustomHttpServlet</strong>  qui s'occupe d'initialiser les objets DAO, de stocker les infos de l'utilisateur courant dans la session, de déclencher les redirections, et d'échapper les caractères spéciaux.</li>
+	<li>Les servlets traitent les paramètres qu'elles reçoivent, et redirigent le traitement en conséquence, vers une JSP ou parfois vers une autre servlet.</li>
+</ul>
+</p>
+
+<h3>Servlets &amp; JSP</h3>
+
+<ul>
+	<li>La servlet <strong>Index</strong> sert à afficher la page d'accueil. Elle récupère une liste des marchés actuellement ouverts, triés par date de fin. Elle redirige ensuite la requête vers la JSP <em>index</em>.</li>
+	<li>La servlet <strong>MarketServlet</strong> gère entièrement l'affichage d'un marché et des offres correspondantes. Elle redirige ensuite la requête vers la JSP <em>market</em>.</li>
+	<li>La servlet <strong>BuyServlet</strong> sert à gérer les propositions d'achat, de la récupération des champs du formulaire jusqu'à l'échange de titres si l'offre d'achat correspond à une/plusieurs offre(s) de vente. Elle redirige ensuite la requête vers la servlet <em>Market</em>.</li>
+	<li>La servlet <strong>MarketCreate</strong> sert à créer un nouveau marché. Elle n'est accessible que par les marketmakers. Elle redirige vers la JSP <em>market_create</em> en cas d'erreur dans le formulaire, et vers la servlet <em>Market</em> du marché nouvellement créé (si la création a bien eu lieu).</li>
+	<li>La servlet <strong>Disconnect</strong> sert à déconnecter l'utilisateur actuel du realm d'authentification. Elle redirige ensuite la requête vers la JSP <em>index</em>.</li>
+</ul><br />
+
+Adresses des pages accessibles :
+<ul>
+	<li><strong>LilleWebMarket/index</strong></li>
+	<li><strong>LilleWebMarket/market</strong></li>
+	<li><strong>LilleWebMarket/market_create</strong></li>
+</ul>
+</p><br />
+
+<h2>Problèmes rencontrés et leur résolution</h2>
+
+<hr />
+
+<h3>Modélisation de la base de données</h3>
+
+<pre><code>Il nous a fallu trouver un modèle permettant à la fois de conserver les informations nécessaires, sans redondance,
+et permettant de faire les mises à jour d'une manière simple et claire.
+Il nous fallait également conserver un historique des évènement (les ventes) du modèle.
+
+Le point sensible a été de trouver comment différencier les offres d'achat (ou de vente) des actions à proprement parler.
+</pre></code>
+
+<h3>Pattern DAO et MVC</h3>
+
+<pre><code>Nous avons eu quelques tatonnements avant de comprendre comment utiliser les beans avec le pattern DAO.
+
+Au début nous avons commencé par directement importer les objets DAO dans les vues, mais nous nous sommes rapidement
+rendu compte que cela enlevait tout l'intérêt des beans et ne respectait pas le principe de séparation entre vue et modèle que
+doit avoir un MVC.
+
+Cela nous a dirigé vers la mise en place d'un vrai modèle MVC : les requêtes se font toujours vers une servlet, qui s'occupe de
+récupérer les beans existants ou d'en créer de nouveaux et de les hydrater avec les objets récupérés dans la couche DAO.
+La servlet redirige ensuite vers une vue (jsp) dans laquelle les informations ne sont accédées que via les beans.
+
+Ainsi nous avons réussi à conserver une bonne étanchéité entre les vues, les contrôleurs et le modèle.
+</code></pre>
+
+<h2>Limites du modèle</h2>
+
+<pre><code>Notre modèle ne permet pas de différencier une offre de vente d'une offre d'achat.
+
+Dans le premier cas, tant que l'action n'a pas été vendue, elle appartient à son propriétaire et peut lui faire gagner de l'argent
+si le marché se termine avant la vente.
+
+Dans le second cas, si le marché se termine et n'a pas trouvé preneur, cela ne peut rien faire gagner à l'offrant.
+
+La solution serait une table differente de 'sells', mais portant les mêmes informations prix et date et répertoriant les actions
+mises en vente par leur propriétaire.
+</code></pre><br />
+
+<h2>Si nous avions eu plus de temps</h2>
+
+<hr />
+
+<ul>
+	<li><p>Gestion de la liste et de la vente des actions</p>
+	<pre>Rajout d'une page de profil complète listant les actions possédées par marchés avec le prix d'achat. Dans la page d'affichage d'un marché, rajout d'un encart contextuel permettant de revendre les actions possédées.</pre></li>
+
+	<li><p>Ajout des mails</p>
+	<pre>Envoi d'un e-mail au market maker lors du dépassement de l'échéance d'un marché, pour lui rappeler de définir l'information qui s'est vérifiée. Envoi d'e-mails aux utilisateurs possédants des actions sur un marché cloturé pour les tenir informés du résultat.</p></li>
+
+	<li><p>Amélioration du css et ajout de javascript frontend</p>
+	<pre>Amélioration de l'interface, que ce soit en terme de design ou d'ergonomie.</pre>
+	<pre>Par exemple mise à jour en temps réel (ajax) du graphique et du tableau des offres de vente et d'achat.</pre></li>
+
+	<li><p>Amélioration de la couche DAO</p>
+	<pre>Implémenter des méthodes 'create', 'delete' et 'update' dans toutes les classes de la pseudo-'couche DAO', pour que celle-ci soit un peu mieux utilisée.</pre></li>
+
+	<li><p>Fermeture 'propre' des marchés</p>
+	<pre>Ne plus supprimer les marchés, actions, ventes et logs en cascade à la fin d'un marché.</pre></li>
+
+	<li><p>Encryptage des mots de passe</p></li>
+</ul>
