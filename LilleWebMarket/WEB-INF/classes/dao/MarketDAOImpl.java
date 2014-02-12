@@ -314,7 +314,7 @@ public class MarketDAOImpl implements MarketDAO, IDAOObject<Market>
 		try
 		{
 			conn = this.factory.getConnection();
-			String req = "SELECT DATE(sell_date) as sdate, log_price, log_quantity FROM logs WHERE market_id = ? ORDER BY sdate DESC LIMIT 25";
+			String req = "SELECT DATE(sell_date) as sdate, log_price, log_quantity FROM logs WHERE market_id = ? ORDER BY sell_date DESC LIMIT 25";
 
 			ps = DAOUtil.getPreparedStatement(conn, req, marketId);
 			rs = ps.executeQuery();
