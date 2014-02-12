@@ -8,10 +8,10 @@
 		maxActive="8"
 		maxIdle="4"
 		maxWait="10000"
-		username="clipetv"
-		password="moi"
-		driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://sqlserv:5432/da2i"
+		username="----------"
+		password="----------"
+		driverClassName="----------"
+		url="jdbc:postgresql://example.com/yourdatabase"
 	/>
 
 
@@ -20,10 +20,10 @@
 	<Realm 
 		className="org.apache.catalina.realm.JDBCRealm"
 		debug="99"
-		driverName="org.postgresql.Driver"
-		connectionURL="jdbc:postgresql://psqlserv/da2i"
-		connectionName="clipetv"
-		connectionPassword="moi"
+		driverName="----------"
+		connectionURL="jdbc:postgresql://example.com/yourdatabase"
+		connectionName="----------"
+		connectionPassword="----------"
 		userTable="users"
 		userNameCol="login"
 		userCredCol="password"
