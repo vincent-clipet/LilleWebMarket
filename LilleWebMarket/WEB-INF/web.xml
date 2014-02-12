@@ -99,6 +99,17 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
     </auth-constraint>
   </security-constraint>
   
+  <security-constraint>
+    <display-name>Security constarint</display-name>
+    <web-resource-collection>
+      <web-resource-name>Automatic SLL Forwarding</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
   <!-- La maniere dont la page de login est affichee -->
   <login-config> 
     <auth-method>FORM</auth-method> 
